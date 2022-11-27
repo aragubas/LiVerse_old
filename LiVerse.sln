@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiVerseClient", "LiVerseClient\LiVerseClient.csproj", "{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12E868F2-2D89-4261-BBA8-FC9C732E2328}
+	EndGlobalSection
+EndGlobal
