@@ -5,7 +5,7 @@ using MonoGame.Extended;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
 using System;
-using System.Diagnostics;
+using System.Timers;
 
 namespace LiVerseClient
 {
@@ -13,14 +13,13 @@ namespace LiVerseClient
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        int _mouseY = 0;
-        int value = 0;
-        float peak = 0;
 
         WaveInEvent _waveIn;
         MMDevice _microphone;
 
         public static Game1 Instance;
+
+        VolumeLevelVisualizer _volumeLevel;
 
         public Game1()
         {
@@ -46,7 +45,7 @@ namespace LiVerseClient
             //}
 
             _waveIn.DeviceNumber = 0;
-            _waveIn.BufferMilliseconds = 16;
+            _waveIn.BufferMilliseconds = 32;
             _waveIn.NumberOfBuffers = 1;
             _waveIn.StartRecording();
 
@@ -62,7 +61,7 @@ namespace LiVerseClient
                 }
             }
 
-
+            _volumeLevel = new VolumeLevelVisualizer(new RectangleF(32, 32, 20, 400));
 
 
             base.Initialize();
@@ -82,37 +81,23 @@ namespace LiVerseClient
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-            _mouseY = MathHelper.Clamp(Mouse.GetState().Y, 0, 100);
+            _volumeLevel.CurrentLevel = _microphone.AudioMeterInformation.MasterPeakValue * 100f;
+            _volumeLevel.Update();
 
-            
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Transparent);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
 
-            float height = 400;
-            float maxLevel = 100;
-            float ceira = Math.Clamp(_microphone.AudioMeterInformation.MasterPeakValue * 100.0f, 0, maxLevel);
-            float ratio = ceira / maxLevel;
+            _volumeLevel.Draw(_spriteBatch);
 
-            if (ceira < peak)
-            {
-                peak = ceira;
-            }
-
-            // Draw level
-            _spriteBatch.FillRectangle(new RectangleF(32, 32 + height - (height * ratio), 20, (height * ratio)), Color.LightBlue);
-            _spriteBatch.DrawRectangle(new RectangleF(32, 32, 20, 400), Color.Blue);
-
-            _spriteBatch.DrawString(Fonts.GetFont("Ubuntu.ttf", 14), $"Level: {ceira}", new Vector2(16, 16), Color.White);
-
+            _spriteBatch.DrawRectangle(new RectangleF(150, 50, 128, 128), _volumeLevel.TriggerActive ? Color.Red : Color.Blue, _volumeLevel.TriggerActive ? 2 : 1);
 
             _spriteBatch.End();
 
