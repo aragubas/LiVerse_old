@@ -9,10 +9,12 @@ namespace LiVerseClient
     {
         Texture2D _mouthClosed;
         Texture2D _mouthOpened;
-        Vector2 _characterPos = Vector2.Zero;
-        Vector2 _characterPosTarget = Vector2.Zero;
-        bool _characterIsShaking = false;
-        bool _characterIsShakingReset = false;
+        Vector2 _Position = Vector2.Zero;
+        Vector2 _PositionTarget = Vector2.Zero;
+        bool _Shaking = false;
+        bool _Idle = false;
+        bool _ShakingReset = false;
+        Vector2 _idleTarget = Vector2.Zero;
 
         Texture2D _currentFrame;
         public bool Speaking;
@@ -30,29 +32,40 @@ namespace LiVerseClient
             if (Speaking)
             {
                 _currentFrame = _mouthOpened;
-                _characterIsShaking = true;
+                _Shaking = true;
+                _Idle = false;
 
-            }else
+            }
+            else
             {
                 _currentFrame = _mouthClosed;
-                _characterIsShaking = false;
-                _characterIsShakingReset = true;
+                _Shaking = false;
+                _ShakingReset = true;
+                _Idle = true;
 
             }
 
-            _characterPos = Vector2.LerpPrecise(_characterPos, _characterPosTarget, 0.5f);
+            _Position = Vector2.LerpPrecise(_Position, _PositionTarget, 0.5f);
 
-            if (_characterIsShaking)
+            if (_Idle)
             {
                 Random ceira = new Random();
-                _characterPosTarget = new Vector2(ceira.Next(-ShakeIntensity, ShakeIntensity), ceira.Next(-ShakeIntensity, ShakeIntensity));
+
+                _idleTarget = new Vector2(ceira.Next(-10, 10), ceira.Next(-10, 10));
+                _PositionTarget = Vector2.LerpPrecise(_PositionTarget, _idleTarget, 0.25f);
+            }
+
+            if (_Shaking)
+            {
+                Random ceira = new Random();
+                _PositionTarget = new Vector2(ceira.Next(-ShakeIntensity, ShakeIntensity), ceira.Next(-ShakeIntensity, ShakeIntensity));
 
             }else
             {
-                if (_characterIsShakingReset)
+                if (_ShakingReset)
                 {
-                    _characterIsShakingReset = false;
-                    _characterPosTarget = Vector2.Zero;
+                    _ShakingReset = false;
+                    _PositionTarget = Vector2.Zero;
                 }
             }
 
@@ -62,7 +75,7 @@ namespace LiVerseClient
         {
             Vector2 newSize = new Vector2(_currentFrame.Width / 2, _currentFrame.Height / 2);
                 
-            spriteBatch.Draw(_currentFrame, new Rectangle(spriteBatch.GraphicsDevice.Viewport.Width / 2 - (int)newSize.X / 2 + (int)_characterPos.X, spriteBatch.GraphicsDevice.Viewport.Height / 2 - (int)newSize.Y / 2 + (int)_characterPos.Y, (int)newSize.X, (int)newSize.Y), Color.White);
+            spriteBatch.Draw(_currentFrame, new Rectangle(spriteBatch.GraphicsDevice.Viewport.Width / 2 - (int)newSize.X / 2 + (int)_Position.X, spriteBatch.GraphicsDevice.Viewport.Height / 2 - (int)newSize.Y / 2 + (int)_Position.Y, (int)newSize.X, (int)newSize.Y), Color.White);
         }
 
     }

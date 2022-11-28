@@ -11,6 +11,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Content\Fonts\Inter-Regular.ttf" />
+    <None Remove="Content\Fonts\Ubuntu-Light.ttf" />
     <None Remove="Content\Images\mouth_closed.png" />
     <None Remove="Content\Images\mouth_open.png" />
     <None Remove="Content\Ubuntu.ttf" />
@@ -18,6 +20,12 @@
     <None Remove="Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Fonts\Inter-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\Ubuntu-Light.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Fonts\Ubuntu.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

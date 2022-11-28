@@ -98,7 +98,7 @@ namespace LiVerseClient
             // Draw trigger
             Color triggerColor = ratio >= TriggerLevel ? _triggerActiveColor : _triggerColor;
             spriteBatch.FillRectangle(new RectangleF(_rectangle.X, _rectangle.Bottom - (_rectangle.Height * TriggerLevel), 20, 4), _triggerGrabbed ? _triggerGrabbedColor : triggerColor);
-            
+
             if (_triggerGrabbed)
             {
                 float Y = _rectangle.Y + _rectangle.Height - (_rectangle.Height * TriggerLevel) + 2;

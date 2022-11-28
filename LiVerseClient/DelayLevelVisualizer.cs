@@ -18,7 +18,7 @@ namespace LiVerseClient
 
         public float MaxValue = 100;
         public float CurrentValue = 1;
-        public float TriggerLevel = 0.25f;
+        public float TriggerLevel = 0.8f;
         public bool TriggerActive = false;
 
         Color _boxColor;

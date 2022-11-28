@@ -30,6 +30,10 @@ namespace LiVerseClient
         float _delayValue = 0;
         float _delayValueTarget = 0;
 
+        public bool TransparentMode = false;
+        KeyboardState _oldKeyboardState;
+        SpriteFont _copyrightTextFont;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -54,7 +58,7 @@ namespace LiVerseClient
             //}
 
             _delayResetTimer = new Timer();
-            _delayResetTimer.Interval = 500;
+            _delayResetTimer.Interval = 50;
             _delayResetTimer.Elapsed += _delayResetTimer_Elapsed;
             _delayResetTimer.Start();
 
@@ -90,9 +94,13 @@ namespace LiVerseClient
 
         private void _delayResetTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (!_volumeLevel.TriggerActive)
+            if (_volumeLevel != null)
             {
-                _delayValueTarget = 0;
+                if (!_volumeLevel.TriggerActive)
+                {
+                    if (_delayValueTarget != 0)
+                        _delayValueTarget = _delayValueTarget / 2;
+                }
             }
         }
 
@@ -102,26 +110,29 @@ namespace LiVerseClient
 
             // Pre-Cache font
             Fonts.LoadFont(GraphicsDevice, "Ubuntu.ttf", 14);
-            
+            _copyrightTextFont = Fonts.GetFont(GraphicsDevice, "Ubuntu-Light.ttf", 24);
+
             Window.Title = "LiVerse";
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) && _oldKeyboardState.IsKeyUp(Keys.Escape))
+                TransparentMode = !TransparentMode;
+            _oldKeyboardState = Keyboard.GetState();
 
             _volumeLevel.CurrentValue = _microphone.AudioMeterInformation.MasterPeakValue * 100f;
-            _volumeLevel.Update(IsActive);
+            _volumeLevel.Update(IsActive || !TransparentMode);
 
             _delayValue = MathHelper.LerpPrecise(_delayValue, _delayValueTarget, 0.5f);
             _delayLevel.CurrentValue = _delayValue;
 
-            _delayLevel.Update(IsActive);
+            _delayLevel.Update(IsActive || !TransparentMode);
 
             if (_volumeLevel.TriggerActive)
             {
                 _delayValueTarget = 100;
+                _delayValue = 100;
             }
 
             _character.Update();
@@ -134,14 +145,19 @@ namespace LiVerseClient
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(TransparentMode ? Color.Transparent : Color.CornflowerBlue);
 
 
             _spriteBatch.Begin();
 
             _character.Draw(_spriteBatch);
-            _delayLevel.Draw(_spriteBatch);
-            _volumeLevel.Draw(_spriteBatch);
+            if (!TransparentMode)
+            {
+                _delayLevel.Draw(_spriteBatch);
+                _volumeLevel.Draw(_spriteBatch);
+                _spriteBatch.DrawString(_copyrightTextFont, "LiVerse Alpha by Aragubas", new Vector2(16, GraphicsDevice.Viewport.Height - 32), Color.White);
+            }
+
 
             _spriteBatch.End();
 
