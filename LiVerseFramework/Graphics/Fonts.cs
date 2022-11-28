@@ -1,22 +1,27 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using SpriteFontPlus;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiVerseClient
+namespace LiVerseFramework.Graphics
 {
     public static class Fonts
     {
         static List<SpriteFont> CachedFonts = new List<SpriteFont>();
         static List<string> CachedFonts_Key = new List<string>();
 
-        public static void LoadFont(string FontPath, int FontSize)
+        /// <summary>
+        /// Loads a font into the font cache
+        /// </summary>
+        /// <param name="FontPath">Font file name (inside font content folder)</param>
+        /// <param name="FontSize">Font size in pixels</param>
+        public static void LoadFont(GraphicsDevice graphicsDevice, string FontPath, int FontSize)
         {
-            FontPath = Path.Combine(Environment.CurrentDirectory, "Content", FontPath);
+            FontPath = Path.Combine(Environment.CurrentDirectory, "Content", "Fonts", FontPath);
             string FontDescName = Path.GetFileName(FontPath).Replace("/", "").Replace("\\", "");
 
             var fontBakeResult = TtfFontBaker.Bake(File.ReadAllBytes(FontPath),
@@ -28,15 +33,15 @@ namespace LiVerseClient
                                                         CharacterRange.BasicLatin,
                                                         CharacterRange.Latin1Supplement,
                                                         CharacterRange.LatinExtendedA,
-                                                        CharacterRange.Cyrillic
+                         CharacterRange.Cyrillic
                          }
                      );
 
-            CachedFonts.Add(fontBakeResult.CreateSpriteFont(Game1.Instance.GraphicsDevice));
+            CachedFonts.Add(fontBakeResult.CreateSpriteFont(graphicsDevice));
             CachedFonts_Key.Add($"{FontDescName}:{FontSize}");
         }
 
-        public static SpriteFont GetFont(string FontPath, int FontSize)
+        public static SpriteFont GetFont(GraphicsDevice graphicsDevice, string FontPath, int FontSize)
         {
             int FontIndex = CachedFonts_Key.IndexOf($"{FontPath}:{FontSize}");
 
@@ -45,18 +50,13 @@ namespace LiVerseClient
             // Font was not found in cache
             if (FontIndex == -1)
             {
-                Console.WriteLine("A font is being added to Font Cache");
-                Console.WriteLine("Please wait, the application has not frozen");
-
-                LoadFont(FontPath, FontSize);
-
-                Console.WriteLine("Sucefully added font to font cache");
+                LoadFont(graphicsDevice, FontPath, FontSize);
 
                 FontIndex = CachedFonts_Key.IndexOf($"{FontPath}:{FontSize}");
 
                 if (FontIndex == -1)
                 {
-                    throw new NotImplementedException("A internal bug has occoured on the application.\nFont was added to cache, but its index could not be found.");
+                    throw new KeyNotFoundException($"Could not find font '{FontPath}:{FontSize}'");
                 }
             }
 

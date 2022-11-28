@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiVerseClient", "LiVerseClient\LiVerseClient.csproj", "{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiVerseClient", "LiVerseClient\LiVerseClient.csproj", "{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiVerseFramework", "LiVerseFramework\LiVerseFramework.csproj", "{9DAA69D4-40B4-42C2-AFFB-6082347C3765}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DAA69D4-40B4-42C2-AFFB-6082347C3765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DAA69D4-40B4-42C2-AFFB-6082347C3765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DAA69D4-40B4-42C2-AFFB-6082347C3765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DAA69D4-40B4-42C2-AFFB-6082347C3765}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

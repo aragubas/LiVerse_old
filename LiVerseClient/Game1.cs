@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Cyotek.Drawing.BitmapFont;
+using LiVerseFramework.Graphics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
@@ -20,6 +22,13 @@ namespace LiVerseClient
         public static Game1 Instance;
 
         VolumeLevelVisualizer _volumeLevel;
+        DelayLevelVisualizer _delayLevel;
+
+        Character _character;
+
+        Timer _delayResetTimer;
+        float _delayValue = 0;
+        float _delayValueTarget = 0;
 
         public Game1()
         {
@@ -44,6 +53,11 @@ namespace LiVerseClient
             //    Console.WriteLine($"Device ID: {i} | Name: {capabilities.ProductName}");
             //}
 
+            _delayResetTimer = new Timer();
+            _delayResetTimer.Interval = 500;
+            _delayResetTimer.Elapsed += _delayResetTimer_Elapsed;
+            _delayResetTimer.Start();
+
             _waveIn.DeviceNumber = 0;
             _waveIn.BufferMilliseconds = 32;
             _waveIn.NumberOfBuffers = 1;
@@ -62,9 +76,24 @@ namespace LiVerseClient
             }
 
             _volumeLevel = new VolumeLevelVisualizer(new RectangleF(32, 32, 20, 400));
+            _delayLevel = new DelayLevelVisualizer(new Rectangle(58, 32, 20, 400));
 
+            _character = new Character();
+            Window.AllowUserResizing = true;
+
+            _graphics.PreferredBackBufferWidth = 640;
+            _graphics.PreferredBackBufferHeight = 500;
+            _graphics.ApplyChanges();
 
             base.Initialize();
+        }
+
+        private void _delayResetTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (!_volumeLevel.TriggerActive)
+            {
+                _delayValueTarget = 0;
+            }
         }
 
         protected override void LoadContent()
@@ -72,8 +101,9 @@ namespace LiVerseClient
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Pre-Cache font
-            Fonts.LoadFont("Ubuntu.ttf", 14);
-
+            Fonts.LoadFont(GraphicsDevice, "Ubuntu.ttf", 14);
+            
+            Window.Title = "LiVerse";
         }
 
         protected override void Update(GameTime gameTime)
@@ -81,8 +111,22 @@ namespace LiVerseClient
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _volumeLevel.CurrentLevel = _microphone.AudioMeterInformation.MasterPeakValue * 100f;
-            _volumeLevel.Update();
+            _volumeLevel.CurrentValue = _microphone.AudioMeterInformation.MasterPeakValue * 100f;
+            _volumeLevel.Update(IsActive);
+
+            _delayValue = MathHelper.LerpPrecise(_delayValue, _delayValueTarget, 0.5f);
+            _delayLevel.CurrentValue = _delayValue;
+
+            _delayLevel.Update(IsActive);
+
+            if (_volumeLevel.TriggerActive)
+            {
+                _delayValueTarget = 100;
+            }
+
+            _character.Update();
+            _character.Speaking = _delayLevel.TriggerActive;
+
 
 
             base.Update(gameTime);
@@ -92,16 +136,14 @@ namespace LiVerseClient
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+
             _spriteBatch.Begin();
 
+            _character.Draw(_spriteBatch);
+            _delayLevel.Draw(_spriteBatch);
             _volumeLevel.Draw(_spriteBatch);
 
-            _spriteBatch.DrawRectangle(new RectangleF(150, 50, 128, 128), _volumeLevel.TriggerActive ? Color.Red : Color.Blue, _volumeLevel.TriggerActive ? 2 : 1);
-
             _spriteBatch.End();
-
-
 
             base.Draw(gameTime);
         }
