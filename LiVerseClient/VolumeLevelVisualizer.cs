@@ -26,6 +26,7 @@ namespace LiVerseClient
 
         Color _boxColor;
         Color _meterColor;
+        Color _meterDetailColor;
         Color _peakColor;
         Color _triggerColor;
         Color _triggerGrabbedColor;
@@ -42,6 +43,7 @@ namespace LiVerseClient
 
             _boxColor = Color.FromNonPremultiplied(66, 100, 234, 255);
             _meterColor = Color.FromNonPremultiplied(102, 130, 238, 255);
+            _meterDetailColor = Color.FromNonPremultiplied(2, 30, 138, 50);
             _peakColor = Color.FromNonPremultiplied(127, 219, 255, 50);
 
             _triggerColor = Color.FromNonPremultiplied(5, 96, 150, 150);
@@ -88,9 +90,10 @@ namespace LiVerseClient
 
             _peak = MathHelper.LerpPrecise(_peak, _peakTarget, 0.6f);
 
-
+ 
             // Draw level
             spriteBatch.FillRectangle(new RectangleF(_rectangle.X, _rectangle.Bottom - (_rectangle.Height * ratio), 20, (_rectangle.Height * ratio)), _meterColor);
+            spriteBatch.FillRectangle(new RectangleF(_rectangle.X, _rectangle.Bottom - (_rectangle.Height * ratio) + 1, 20, 1), _meterDetailColor);
 
             // Draw peak
             spriteBatch.FillRectangle(new RectangleF(_rectangle.X, _rectangle.Bottom - (_rectangle.Height * _peak) - 2, 20, 4), _peakColor);
@@ -103,7 +106,7 @@ namespace LiVerseClient
             {
                 float Y = _rectangle.Y + _rectangle.Height - (_rectangle.Height * TriggerLevel) + 2;
 
-                spriteBatch.DrawLine(_rectangle.X, Y, _rectangle.Right, Y, Color.DarkRed);
+                spriteBatch.DrawLine(_rectangle.X + 2, Y, _rectangle.Right - 2, Y, Color.DarkRed);
             }
 
             // Draw box

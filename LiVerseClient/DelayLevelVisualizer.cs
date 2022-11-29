@@ -81,13 +81,13 @@ namespace LiVerseClient
             {
                 float Y = _rectangle.Y + _rectangle.Height - (_rectangle.Height * TriggerLevel) + 2;
 
-                spriteBatch.DrawLine(_rectangle.X, Y, _rectangle.Right, Y, Color.DarkRed);
+                spriteBatch.DrawLine(_rectangle.X + 2, Y, _rectangle.Right - 2, Y, Color.DarkRed);
             }
 
             // Draw box
             spriteBatch.DrawRectangle(new RectangleF(_rectangle.X, _rectangle.Y, _rectangle.Width, _rectangle.Height), _boxColor);
 
-            spriteBatch.DrawString(_font, $"Trigger: {TriggerLevel} Value: {ratio}", new Vector2(_rectangle.X, _rectangle.Y - 16), Color.White);
+            //spriteBatch.DrawString(_font, $"Trigger: {TriggerLevel} Value: {ratio}", new Vector2(_rectangle.X, _rectangle.Y - 16), Color.White);
         }
 
 

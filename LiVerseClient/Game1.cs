@@ -135,7 +135,7 @@ namespace LiVerseClient
                 _delayValue = 100;
             }
 
-            _character.Update();
+            _character.Update(gameTime);
             _character.Speaking = _delayLevel.TriggerActive;
 
 
