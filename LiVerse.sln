@@ -4,8 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiVerseClient", "LiVerseClient\LiVerseClient.csproj", "{D03EF0AB-0958-42E7-B93B-0F4EAEAE707B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A43E1886-7650-44B9-B5DE-FB8EAD7C5296} = {A43E1886-7650-44B9-B5DE-FB8EAD7C5296}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiVerseFramework", "LiVerseFramework\LiVerseFramework.csproj", "{9DAA69D4-40B4-42C2-AFFB-6082347C3765}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DefaultPlugins", "DefaultPlugins", "{0DAC8415-7D84-4F68-BF66-0D4A82EFDB88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "TestPlugin\TestPlugin.csproj", "{A43E1886-7650-44B9-B5DE-FB8EAD7C5296}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +28,16 @@ Global
 		{9DAA69D4-40B4-42C2-AFFB-6082347C3765}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DAA69D4-40B4-42C2-AFFB-6082347C3765}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DAA69D4-40B4-42C2-AFFB-6082347C3765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A43E1886-7650-44B9-B5DE-FB8EAD7C5296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A43E1886-7650-44B9-B5DE-FB8EAD7C5296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A43E1886-7650-44B9-B5DE-FB8EAD7C5296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A43E1886-7650-44B9-B5DE-FB8EAD7C5296}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A43E1886-7650-44B9-B5DE-FB8EAD7C5296} = {0DAC8415-7D84-4F68-BF66-0D4A82EFDB88}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {12E868F2-2D89-4261-BBA8-FC9C732E2328}

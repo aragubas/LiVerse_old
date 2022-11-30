@@ -4,12 +4,16 @@
     <TargetFramework>net6.0</TargetFramework>
     <RollForward>Major</RollForward>
     <PublishReadyToRun>false</PublishReadyToRun>
-    <TieredCompilation>false</TieredCompilation>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
+	
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <OutputPath>$(SolutionDir)Output</OutputPath>
   </PropertyGroup>
+	
   <ItemGroup>
     <None Remove="Content\Fonts\Inter-Regular.ttf" />
     <None Remove="Content\Fonts\Ubuntu-Light.ttf" />
@@ -20,41 +24,53 @@
     <None Remove="Icon.bmp" />
     <None Remove="Plugins\Readme.txt" />
   </ItemGroup>
+	
   <ItemGroup>
     <Content Include="Content\Fonts\Inter-Regular.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+	  
     <Content Include="Content\Fonts\Ubuntu-Light.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+	  
     <Content Include="Content\Fonts\Ubuntu.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+	  
     <Content Include="Content\Images\mouth_closed.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+	  
     <Content Include="Content\Images\mouth_open.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+	  
     <Content Include="Plugins\Readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+	  
   </ItemGroup>
+	
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
     <EmbeddedResource Include="Icon.bmp" />
   </ItemGroup>
+	
   <ItemGroup>
     <PackageReference Include="MonoGame.Extended" Version="3.8.0" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
     <PackageReference Include="NAudio" Version="2.1.0" />
     <PackageReference Include="SpriteFontPlus" Version="0.9.2" />
   </ItemGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\LiVerseFramework\LiVerseFramework.csproj" />
   </ItemGroup>
+	
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />
   </Target>
+	
 </Project>

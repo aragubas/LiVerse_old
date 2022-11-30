@@ -15,7 +15,7 @@ A plugin directory should be set up in this structure:
     "version": "Major.Minor.Revision",
     "title": "Beautiful Plugin Name (name shown in UI's)",
     "author": "AuthorName, or multiple authors separated by a colon",
-    "assembly_path": "./plugin.dll"
+    "assembly_path": "plugin.dll"
 }
 
-Assembly path should be relative to the current plugin folder directory
+Assembly path is always relative to the current plugin folder directory

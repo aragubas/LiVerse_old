@@ -1,4 +1,5 @@
 ﻿using Cyotek.Drawing.BitmapFont;
+using LiVerseFramework;
 using LiVerseFramework.Character;
 using LiVerseFramework.Graphics;
 using Microsoft.Xna.Framework;
@@ -12,26 +13,27 @@ using System.Timers;
 
 namespace LiVerseClient
 {
-    public class Game1 : Game
+    public class Game1 : Game, IClientInstance
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        public MMDevice Microphone { get; set; }
+        public ICharacter Character { get; set; }
+        public static Game1 Instance;
+        public bool TransparentMode { get; set; }
+
+        GraphicsDeviceManager _graphics;
+        SpriteBatch _spriteBatch;
 
         WaveInEvent _waveIn;
-        MMDevice _microphone;
 
-        public static Game1 Instance;
 
         VolumeLevelVisualizer _volumeLevel;
         DelayLevelVisualizer _delayLevel;
 
-        ICharacter _character;
 
         Timer _delayResetTimer;
         float _delayValue = 0;
         float _delayValueTarget = 0;
 
-        public bool TransparentMode = false;
         KeyboardState _oldKeyboardState;
         SpriteFont _copyrightTextFont;
 
@@ -75,7 +77,7 @@ namespace LiVerseClient
             {
                 if (device.FriendlyName.Contains(WaveInEvent.GetCapabilities(0).ProductName))
                 {
-                    _microphone = device;
+                    Microphone = device;
                     break;
                 }
             }
@@ -83,7 +85,7 @@ namespace LiVerseClient
             _volumeLevel = new VolumeLevelVisualizer(new RectangleF(32, 32, 20, 400));
             _delayLevel = new DelayLevelVisualizer(new Rectangle(58, 32, 20, 400));
 
-            _character = new DefaultCharacter();
+            Character = new DefaultCharacter();
             Window.AllowUserResizing = true;
 
             _graphics.PreferredBackBufferWidth = 640;
@@ -123,7 +125,7 @@ namespace LiVerseClient
                 TransparentMode = !TransparentMode;
             _oldKeyboardState = Keyboard.GetState();
 
-            _volumeLevel.CurrentValue = _microphone.AudioMeterInformation.MasterPeakValue * 100f;
+            _volumeLevel.CurrentValue = Microphone.AudioMeterInformation.MasterPeakValue * 100f;
             _volumeLevel.Update(IsActive || !TransparentMode);
 
             _delayValue = MathHelper.LerpPrecise(_delayValue, _delayValueTarget, 0.5f);
@@ -137,8 +139,8 @@ namespace LiVerseClient
                 _delayValue = 100;
             }
 
-            _character.Update(gameTime);
-            _character.Speaking = _delayLevel.TriggerActive;
+            Character.Update(gameTime);
+            Character.Speaking = _delayLevel.TriggerActive;
 
 
 
@@ -152,12 +154,12 @@ namespace LiVerseClient
 
             _spriteBatch.Begin();
 
-            _character.Draw(_spriteBatch);
+            Character.Draw(_spriteBatch);
             if (!TransparentMode)
             {
                 _delayLevel.Draw(_spriteBatch);
                 _volumeLevel.Draw(_spriteBatch);
-                _spriteBatch.DrawString(_copyrightTextFont, "LiVerse Alpha by Aragubas", new Vector2(16, GraphicsDevice.Viewport.Height - 38), Color.White);
+                _spriteBatch.DrawString(_copyrightTextFont, "LiVerse Alpha", new Vector2(16, GraphicsDevice.Viewport.Height - 38), Color.White);
             }
 
 

@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /LiVerseClient/Content/Images/mouth_closed.png
 /LiVerseClient/Content/Images/mouth_open.png
+
+# Output Directory
+Output/
