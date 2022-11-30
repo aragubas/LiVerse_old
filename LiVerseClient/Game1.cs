@@ -157,7 +157,7 @@ namespace LiVerseClient
             {
                 _delayLevel.Draw(_spriteBatch);
                 _volumeLevel.Draw(_spriteBatch);
-                _spriteBatch.DrawString(_copyrightTextFont, "LiVerse Alpha by Aragubas", new Vector2(16, GraphicsDevice.Viewport.Height - 32), Color.White);
+                _spriteBatch.DrawString(_copyrightTextFont, "LiVerse Alpha by Aragubas", new Vector2(16, GraphicsDevice.Viewport.Height - 38), Color.White);
             }
 
 
