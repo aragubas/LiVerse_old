@@ -48,7 +48,8 @@ namespace LiVerseClient
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            PluginHost.InstanceManager.LoadPlugin("aragubas.tests.testplugin");
+            
             _waveIn = new WaveInEvent();
 
             //int waveInDeviceCount = WaveInEvent.DeviceCount;

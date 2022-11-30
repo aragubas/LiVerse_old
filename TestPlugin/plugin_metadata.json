@@ -1,7 +1,7 @@
 ﻿{
   "id": "aragubas.tests.testplugin",
-  "version": "1.0.0",
   "title": "Test Plugin",
+  "version": "1.0.0",
   "author": "Aragubas",
-  "assembly_path":  "plugin.dll"
+  "assembly_path":  "plugin_assembly.dll"
 }

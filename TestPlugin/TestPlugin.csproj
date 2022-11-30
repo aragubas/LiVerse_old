@@ -10,6 +10,8 @@
 	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 
 	<OutputPath>$(SolutionDir)Output/Plugins/aragubas.tests.testplugin/</OutputPath>
+
+	<AssemblyName>plugin_assembly</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

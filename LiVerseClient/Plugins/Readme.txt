@@ -12,8 +12,8 @@ A plugin directory should be set up in this structure:
 [plugin_metadata.json]
 {
     "id": "author.plugin_name",
-    "version": "Major.Minor.Revision",
     "title": "Beautiful Plugin Name (name shown in UI's)",
+    "version": "Major.Minor.Revision",
     "author": "AuthorName, or multiple authors separated by a colon",
     "assembly_path": "plugin.dll"
 }
