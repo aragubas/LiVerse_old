@@ -70,16 +70,11 @@ namespace LiVerseClient
             if (Speaking)
             {
                 _currentFrame = _mouthOpened;
-                //_Shaking = true;
-                //_Idle = false;
 
             }
             else
             {
                 _currentFrame = _mouthClosed;
-                //_Shaking = false;
-                //_ShakingReset = true;
-                //_Idle = true;
 
             }
 
