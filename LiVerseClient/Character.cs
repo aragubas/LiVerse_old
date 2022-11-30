@@ -16,8 +16,7 @@ namespace LiVerseClient
         Vector2 _idle = Vector2.Zero;
         float _intensity = 5;
         double _time = 0;
-        int ceira = 0;
-
+        
         public IdleAnimation()
         {
             
@@ -32,47 +31,10 @@ namespace LiVerseClient
 
             if (_time >= 0.25)
             {
-                //ceira += 1;
-
                 _idleTarget = new Vector2(Random.Shared.Next((int)-_intensity, (int)_intensity), Random.Shared.Next((int)-_intensity, (int)_intensity));
-
-                //if (ceira == 1)
-                //{
-                //    _idleTarget = new Vector2(_intensity, -_intensity); // Top-Left Corner
-                //}
-                //else if (ceira == 2)
-                //{
-                //    _idleTarget = Vector2.Zero;
-                //}
-                //else if (ceira == 3)
-                //{
-                //    _idleTarget = new Vector2(_intensity, _intensity); // Bottom-Right Corner
-
-                //}
-                //else if (ceira == 4)
-                //{
-                //    _idleTarget = Vector2.Zero;
-
-                //} else if (ceira == 5)
-                //{
-                //    _idleTarget = new Vector2(_intensity, -_intensity); // Top-Right Corner
-
-                //}
-                //else if (ceira == 6)
-                //{
-                //    _idleTarget = Vector2.Zero;
-                //} else if (ceira == 7)
-                //{
-                //    _idleTarget = new Vector2(-_intensity, _intensity); // Bottom-Left Corner
-
-                //    ceira = 0;
-                //}
-
 
                 _time = 0;
             }
-
-            //Debug.WriteLine(gameTime.ElapsedGameTime.TotalSeconds);
         }
 
     }
@@ -86,11 +48,6 @@ namespace LiVerseClient
         Texture2D _mouthClosed;
         Texture2D _mouthOpened;
         Vector2 _Position = Vector2.Zero;
-        Vector2 _PositionTarget = Vector2.Zero;
-        bool _Shaking = false;
-        bool _Idle = false;
-        bool _ShakingReset = false;
-        Vector2 _idleTarget = Vector2.Zero;
 
         Texture2D _currentFrame;
 
