@@ -20,6 +20,11 @@ namespace LiVerseFramework.Character
         public Vector2 PositionOffset { get; set; }
 
         /// <summary>
+        /// True if the character is speaking (set by the current <seealso cref="ICharacter"/> instance)
+        /// </summary>
+        public bool IsCharacterSpeaking { get; set; }
+
+        /// <summary>
         /// Update method called every frame
         /// </summary>
         /// <param name="gameTime">Monogame's GameTime time step class</param>

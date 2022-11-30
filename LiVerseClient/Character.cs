@@ -11,6 +11,7 @@ namespace LiVerseClient
     {
         public string Name => "Idle";
         public Vector2 PositionOffset { get; set; }
+        public bool IsCharacterSpeaking { get; set; }
 
         Vector2 _idleTarget = Vector2.Zero;
         Vector2 _idle = Vector2.Zero;
@@ -78,6 +79,7 @@ namespace LiVerseClient
 
             }
 
+            idleAnimation.IsCharacterSpeaking = Speaking;
         }
 
         public void Draw(SpriteBatch spriteBatch)
