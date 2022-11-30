@@ -1,4 +1,5 @@
 ﻿using Cyotek.Drawing.BitmapFont;
+using LiVerseFramework.Character;
 using LiVerseFramework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +25,7 @@ namespace LiVerseClient
         VolumeLevelVisualizer _volumeLevel;
         DelayLevelVisualizer _delayLevel;
 
-        Character _character;
+        ICharacter _character;
 
         Timer _delayResetTimer;
         float _delayValue = 0;
@@ -82,12 +83,13 @@ namespace LiVerseClient
             _volumeLevel = new VolumeLevelVisualizer(new RectangleF(32, 32, 20, 400));
             _delayLevel = new DelayLevelVisualizer(new Rectangle(58, 32, 20, 400));
 
-            _character = new Character();
+            _character = new DefaultCharacter();
             Window.AllowUserResizing = true;
 
             _graphics.PreferredBackBufferWidth = 640;
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
+
 
             base.Initialize();
         }

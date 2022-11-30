@@ -1,41 +1,20 @@
-﻿using LiVerseFramework.Graphics;
+﻿using LiVerseFramework.Character;
+using LiVerseFramework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
-using System.Diagnostics;
-using System.Runtime.ConstrainedExecution;
-using System.Timers;
 
 namespace LiVerseClient
 {
-    interface CharacterAnimation
-    {
-        /// <summary>
-        /// Descriptive name for your animation, usually separated by _ or written in CamelCase
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// The final position offset for the current frame, set by Animation's Update method every frame
-        /// </summary> 
-        public Vector2 PositionOffset { get; set; }
-
-        /// <summary>
-        /// Update method called every frame
-        /// </summary>
-        /// <param name="gameTime">Monogame's GameTime time step class</param>
-        void Update(GameTime gameTime) { }
-    }
-
-    class IdleAnimation : CharacterAnimation
+    class IdleAnimation : ICharacterAnimation
     {
         public string Name => "Idle";
         public Vector2 PositionOffset { get; set; }
 
         Vector2 _idleTarget = Vector2.Zero;
         Vector2 _idle = Vector2.Zero;
-        float _intensity = 10;
+        float _intensity = 5;
         double _time = 0;
         int ceira = 0;
 
@@ -44,48 +23,50 @@ namespace LiVerseClient
             
         }
 
-        void CharacterAnimation.Update(GameTime gameTime)
+        void ICharacterAnimation.Update(GameTime gameTime)
         {
             _time += gameTime.ElapsedGameTime.TotalSeconds;
 
-            PositionOffset = Vector2.SmoothStep(PositionOffset, _idleTarget, 0.1f);
-            _idle = Vector2.SmoothStep(_idle, _idleTarget, 0.8f);
+            PositionOffset = Vector2.SmoothStep(PositionOffset, _idle, 0.1f);
+            _idle = new Vector2(MathF.Sin(_idleTarget.X) * _intensity, MathF.Cos(_idleTarget.Y) * _intensity);
 
             if (_time >= 0.25)
             {
-                ceira += 1;
+                //ceira += 1;
 
-                if (ceira == 1)
-                {
-                    _idleTarget = new Vector2(_intensity, -_intensity); // Top-Left Corner
-                }
-                else if (ceira == 2)
-                {
-                    _idleTarget = Vector2.Zero;
-                }
-                else if (ceira == 3)
-                {
-                    _idleTarget = new Vector2(_intensity, _intensity); // Bottom-Right Corner
+                _idleTarget = new Vector2(Random.Shared.Next((int)-_intensity, (int)_intensity), Random.Shared.Next((int)-_intensity, (int)_intensity));
 
-                }
-                else if (ceira == 4)
-                {
-                    _idleTarget = Vector2.Zero;
+                //if (ceira == 1)
+                //{
+                //    _idleTarget = new Vector2(_intensity, -_intensity); // Top-Left Corner
+                //}
+                //else if (ceira == 2)
+                //{
+                //    _idleTarget = Vector2.Zero;
+                //}
+                //else if (ceira == 3)
+                //{
+                //    _idleTarget = new Vector2(_intensity, _intensity); // Bottom-Right Corner
 
-                } else if (ceira == 5)
-                {
-                    _idleTarget = new Vector2(_intensity, -_intensity); // Top-Right Corner
+                //}
+                //else if (ceira == 4)
+                //{
+                //    _idleTarget = Vector2.Zero;
 
-                }
-                else if (ceira == 6)
-                {
-                    _idleTarget = Vector2.Zero;
-                } else if (ceira == 7)
-                {
-                    _idleTarget = new Vector2(-_intensity, _intensity); // Bottom-Left Corner
+                //} else if (ceira == 5)
+                //{
+                //    _idleTarget = new Vector2(_intensity, -_intensity); // Top-Right Corner
 
-                    ceira = 0;
-                }
+                //}
+                //else if (ceira == 6)
+                //{
+                //    _idleTarget = Vector2.Zero;
+                //} else if (ceira == 7)
+                //{
+                //    _idleTarget = new Vector2(-_intensity, _intensity); // Bottom-Left Corner
+
+                //    ceira = 0;
+                //}
 
 
                 _time = 0;
@@ -96,9 +77,9 @@ namespace LiVerseClient
 
     }
 
-    public class Character
+    public class DefaultCharacter : ICharacter
     {
-        public bool Speaking;
+        public bool Speaking { get; set; }
         public int ShakeIntensity = 10;
         public bool DrawBoundaries { get; set; } = true;
 
@@ -113,20 +94,21 @@ namespace LiVerseClient
 
         Texture2D _currentFrame;
 
-        CharacterAnimation characterAnimation;
+        ICharacterAnimation idleAnimation;
+        ICharacterAnimation stateChangeAnimation;
 
-        public Character() 
+        public DefaultCharacter() 
         {
             _mouthClosed = Sprites.Texture2DFromFile(Game1.Instance.GraphicsDevice, "mouth_closed.png");
             _mouthOpened = Sprites.Texture2DFromFile(Game1.Instance.GraphicsDevice, "mouth_open.png");
 
-            characterAnimation = new IdleAnimation();
+            idleAnimation = new IdleAnimation();
         }
 
         public void Update(GameTime gameTime)
         {
-            characterAnimation?.Update(gameTime);
-            _Position = Vector2.SmoothStep(_Position, characterAnimation.PositionOffset, 28f * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            idleAnimation?.Update(gameTime);
+            _Position = Vector2.SmoothStep(_Position, idleAnimation.PositionOffset, 28f * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
             if (Speaking)
             {
@@ -143,29 +125,6 @@ namespace LiVerseClient
                 //_Idle = true;
 
             }
-
-
-            //if (_Idle)
-            //{
-            //    Random ceira = new Random();
-
-            //    _idleTarget = new Vector2(ceira.Next(-10, 10), ceira.Next(-10, 10));
-            //    _PositionTarget = Vector2.LerpPrecise(_PositionTarget, _idleTarget, 0.25f);
-            //}
-
-            //if (_Shaking)
-            //{
-            //    Random ceira = new Random();
-            //    _PositionTarget = new Vector2(ceira.Next(-ShakeIntensity, ShakeIntensity), ceira.Next(-ShakeIntensity, ShakeIntensity));
-
-            //}else
-            //{
-            //    if (_ShakingReset)
-            //    {
-            //        _ShakingReset = false;
-            //        _PositionTarget = Vector2.Zero;
-            //    }
-            //}
 
         }
 
