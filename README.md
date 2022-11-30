@@ -1,7 +1,7 @@
 # LiVerse
 LiVerse is a PNG Tuber app for OBS/Streaming overlays
  
-LiVerse Logo () by [Skiqq](https://t.me/skiqqfobia)
+LiVerse Logo by [Skiqq](https://t.me/skiqqfobia)
 
 ## Features
  - Plugin Support
