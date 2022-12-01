@@ -48,7 +48,7 @@ namespace LiVerseClient
 
         protected override void Initialize()
         {
-            PluginHost.InstanceManager.LoadPlugin("aragubas.tests.testplugin");
+            PluginHost.InstanceManager.LoadPlugin(this, "aragubas.tests.testplugin");
             
             _waveIn = new WaveInEvent();
 
