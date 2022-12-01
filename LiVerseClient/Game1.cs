@@ -24,11 +24,12 @@ namespace LiVerseClient
 
         public static Game1 Instance;
 
+        public SpriteFont CommonFont;
+
         GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
 
         WaveInEvent _waveIn;
-
 
         VolumeLevelVisualizer _volumeLevel;
         DelayLevelVisualizer _delayLevel;
@@ -98,6 +99,8 @@ namespace LiVerseClient
 
             _graphics.PreferredBackBufferWidth = 640;
             _graphics.PreferredBackBufferHeight = 500;
+            _graphics.SynchronizeWithVerticalRetrace = false;
+            IsFixedTimeStep = false;
             _graphics.ApplyChanges();
 
             PluginHost.InstanceManager.LoadPlugin(this, "aragubas.tests.testplugin");
@@ -126,6 +129,8 @@ namespace LiVerseClient
             Fonts.LoadFont(GraphicsDevice, "Ubuntu.ttf", 14);
             _copyrightTextFont = Fonts.GetFont(GraphicsDevice, "Ubuntu-Light.ttf", 24);
 
+            CommonFont = Fonts.GetFont(GraphicsDevice, "Ubuntu.ttf", 14);
+
             Window.Title = "LiVerse";
         }
 
@@ -136,7 +141,7 @@ namespace LiVerseClient
             _oldKeyboardState = Keyboard.GetState();
 
             _volumeLevel.CurrentValue = Microphone.AudioMeterInformation.MasterPeakValue * 100f;
-            _volumeLevel.Update(IsActive || !TransparentMode);
+            _volumeLevel.Update(gameTime, IsActive || !TransparentMode);
 
             _delayValue = MathHelper.LerpPrecise(_delayValue, _delayValueTarget, 0.5f);
             _delayLevel.CurrentValue = _delayValue;

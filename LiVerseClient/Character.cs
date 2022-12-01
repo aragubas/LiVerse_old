@@ -22,7 +22,8 @@ namespace LiVerseClient
 
         Texture2D _currentFrame;
 
-        ICharacterAnimation currentAnimation;
+        ICharacterAnimation animationLayer1;
+        ICharacterAnimation animationLayer2;
 
         public DefaultCharacter() 
         {
@@ -38,20 +39,30 @@ namespace LiVerseClient
 
         void Animations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (currentAnimation == null)
+            if (animationLayer1 == null)
             {
-                currentAnimation = Game1.Instance.Animations.Single(animation => animation.Name == "default_idle");
+                animationLayer1 = Game1.Instance.Animations.Single(animation => animation.Name == "default_idle");
             }
         }
 
         public void Update(GameTime gameTime)
         {
-            if (currentAnimation != null)
+            if (animationLayer1 != null)
             {
-                currentAnimation.Update(gameTime);
-                _Position = Vector2.SmoothStep(_Position, currentAnimation.PositionOffset, 28f * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                animationLayer1?.Update(gameTime);
+                animationLayer2?.Update(gameTime);
 
-                currentAnimation.IsCharacterSpeaking = Speaking;
+                Vector2 layer1 = animationLayer1 == null ? Vector2.Zero : animationLayer1.PositionOffset;
+                Vector2 layer2 = animationLayer2 == null ? Vector2.Zero : animationLayer2.PositionOffset;
+
+                _Position = layer1 + layer2;
+
+                animationLayer1.IsCharacterSpeaking = Speaking;
+
+            }
+            else
+            {
+                _Position = Vector2.Zero;
             }
 
             // Change character frame

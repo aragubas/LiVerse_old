@@ -3,7 +3,6 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <RollForward>Major</RollForward>
-    <PublishReadyToRun>false</PublishReadyToRun>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
@@ -12,6 +11,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <OutputPath>$(SolutionDir)Output</OutputPath>
+    <AssemblyName>LiVerse</AssemblyName>
   </PropertyGroup>
 	
   <ItemGroup>

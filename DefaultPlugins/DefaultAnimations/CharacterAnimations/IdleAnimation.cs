@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,12 +19,14 @@ namespace DefaultAnimations.CharacterAnimations
         Vector2 _idle = Vector2.Zero;
         float _intensity = 5;
         double _time = 0;
-
+         
         void ICharacterAnimation.Update(GameTime gameTime)
         {
             _time += gameTime.ElapsedGameTime.TotalSeconds;
 
-            PositionOffset = Vector2.SmoothStep(PositionOffset, _idle, 0.1f);
+            float f = 0.25f;
+            PositionOffset = Vector2.Lerp(PositionOffset, _idle, 1 - MathF.Pow(f, (float)gameTime.ElapsedGameTime.TotalSeconds));
+
             _idle = new Vector2(MathF.Sin(_idleTarget.X) * _intensity, MathF.Cos(_idleTarget.Y) * _intensity);
 
             if (_time >= 0.25)

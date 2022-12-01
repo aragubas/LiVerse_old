@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
+using MonoGame.Extended.Timers;
 using System;
 using System.Timers;
 
@@ -56,7 +57,7 @@ namespace LiVerseClient
             _peakTarget = 0;
         }
 
-        public void Update(bool focused)
+        public void Update(GameTime gameTime, bool focused)
         {
             if (focused)
             {
@@ -77,6 +78,9 @@ namespace LiVerseClient
             }
 
             TriggerActive = CurrentValue / MaxValue >= TriggerLevel;
+
+            // math is weird
+            _peak = MathHelper.LerpPrecise(_peak, _peakTarget, 1 - MathF.Pow(0.00000000000000001f, (float)gameTime.ElapsedGameTime.TotalSeconds));
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -87,9 +91,6 @@ namespace LiVerseClient
             {
                 _peakTarget = ratio;
             }
-
-            _peak = MathHelper.LerpPrecise(_peak, _peakTarget, 0.6f);
-
  
             // Draw level
             spriteBatch.FillRectangle(new RectangleF(_rectangle.X, _rectangle.Bottom - (_rectangle.Height * ratio), 20, (_rectangle.Height * ratio)), _meterColor);

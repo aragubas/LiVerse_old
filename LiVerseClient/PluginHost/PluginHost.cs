@@ -79,6 +79,8 @@ namespace LiVerseClient.PluginHost
 
             // Adds plugin instance to Plugins list
             Plugins.Add((IPlugin)instance);
+
+            Console.WriteLine($"PluginHost] Loaded {pluginMetadata.Title} ({pluginMetadata.Id})");
         }
 
         /// <summary>
@@ -91,8 +93,6 @@ namespace LiVerseClient.PluginHost
             PluginMetadata pluginMetadata = LoadPluginMetadata(pluginPathName);
 
             LoadPluginAssembly(clientInstance, pluginPathName, pluginMetadata);
-
-            Console.WriteLine("Done!");
         }
 
     }
