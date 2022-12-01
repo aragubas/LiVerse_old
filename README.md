@@ -1,7 +1,7 @@
 # LiVerse
 ![LiVerse Logo](Assets/logo.png)
 
-*LiVerse Logo by [Skiqq](https://t.me/skiqqfobia)*
+*Logo by [Skiqq](https://t.me/skiqqfobia)*
 
 LiVerse is hackable/customizeable PNG Avatar app for Streaming/Recording
 
