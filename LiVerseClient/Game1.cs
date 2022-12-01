@@ -41,6 +41,8 @@ namespace LiVerseClient
         KeyboardState _oldKeyboardState;
         SpriteFont _copyrightTextFont;
 
+        GameTime _lastGameTime;
+
         public void AddCharacterAnimation(ICharacterAnimation animation)
         {
             Animations.Add(animation);
@@ -99,7 +101,7 @@ namespace LiVerseClient
 
             _graphics.PreferredBackBufferWidth = 640;
             _graphics.PreferredBackBufferHeight = 500;
-            _graphics.SynchronizeWithVerticalRetrace = false;
+            _graphics.SynchronizeWithVerticalRetrace = true;
             IsFixedTimeStep = false;
             _graphics.ApplyChanges();
 
@@ -157,7 +159,7 @@ namespace LiVerseClient
             Character.Update(gameTime);
             Character.Speaking = _delayLevel.TriggerActive;
 
-
+            _lastGameTime = gameTime;
 
             base.Update(gameTime);
         }
@@ -166,7 +168,6 @@ namespace LiVerseClient
         {
             GraphicsDevice.Clear(TransparentMode ? Color.Transparent : Color.CornflowerBlue);
 
-
             _spriteBatch.Begin();
 
             Character.Draw(_spriteBatch);
@@ -174,6 +175,8 @@ namespace LiVerseClient
             {
                 _delayLevel.Draw(_spriteBatch);
                 _volumeLevel.Draw(_spriteBatch);
+                
+                _spriteBatch.DrawString(CommonFont, $"Frametime: {gameTime.ElapsedGameTime.TotalSeconds}", new Vector2(16, GraphicsDevice.Viewport.Height - 50), Color.White);
                 _spriteBatch.DrawString(_copyrightTextFont, "LiVerse Alpha", new Vector2(16, GraphicsDevice.Viewport.Height - 38), Color.White);
             }
 
