@@ -9,6 +9,8 @@ using MonoGame.Extended;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Timers;
 
 namespace LiVerseClient
@@ -18,6 +20,8 @@ namespace LiVerseClient
         public MMDevice Microphone { get; set; }
         public ICharacter Character { get; set; }
         public bool TransparentMode { get; set; }
+        public ObservableCollection<ICharacterAnimation> Animations { get; set; } = new();
+
         public static Game1 Instance;
 
         GraphicsDeviceManager _graphics;
@@ -36,6 +40,12 @@ namespace LiVerseClient
         KeyboardState _oldKeyboardState;
         SpriteFont _copyrightTextFont;
 
+        public void AddCharacterAnimation(ICharacterAnimation animation)
+        {
+            Animations.Add(animation);
+        }
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -47,9 +57,6 @@ namespace LiVerseClient
 
         protected override void Initialize()
         {
-            PluginHost.InstanceManager.LoadPlugin(this, "aragubas.tests.testplugin");
-            PluginHost.InstanceManager.LoadPlugin(this, "aragubas.liverseCore.defaultAnimations");
-
             _waveIn = new WaveInEvent();
 
             //int waveInDeviceCount = WaveInEvent.DeviceCount;
@@ -93,6 +100,8 @@ namespace LiVerseClient
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
+            PluginHost.InstanceManager.LoadPlugin(this, "aragubas.tests.testplugin");
+            PluginHost.InstanceManager.LoadPlugin(this, "aragubas.liverseCore.defaultAnimations");
 
             base.Initialize();
         }

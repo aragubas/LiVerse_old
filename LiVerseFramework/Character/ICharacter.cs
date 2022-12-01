@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace LiVerseFramework.Character
 {
     public interface ICharacter
-    {
+    {        
         public bool Speaking { get; set; }
 
         public void Update(GameTime gameTime);

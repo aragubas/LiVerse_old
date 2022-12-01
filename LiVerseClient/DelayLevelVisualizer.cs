@@ -11,7 +11,6 @@ namespace LiVerseClient
 {
     public class DelayLevelVisualizer
     {
-        Timer _peakResetTimer;
         RectangleF _rectangle;
 
         bool _triggerGrabbed;
@@ -27,8 +26,6 @@ namespace LiVerseClient
         Color _triggerGrabbedColor;
         Color _triggerActiveColor;
 
-        SpriteFont _font;
-
         public DelayLevelVisualizer(RectangleF rectangle)
         {
             _rectangle = rectangle;
@@ -39,8 +36,6 @@ namespace LiVerseClient
             _triggerColor = Color.FromNonPremultiplied(5, 96, 150, 150);
             _triggerActiveColor = Color.FromNonPremultiplied(96, 15, 160, 150);
             _triggerGrabbedColor = Color.FromNonPremultiplied(196, 115, 260, 255);
-
-            _font = Fonts.GetFont(Game1.Instance.GraphicsDevice, "Ubuntu.ttf", 14);
         }
 
         public void Update(bool focused)

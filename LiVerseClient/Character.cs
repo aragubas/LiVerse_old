@@ -3,43 +3,13 @@ using LiVerseFramework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using MonoGame.Extended.Sprites;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LiVerseClient
 {
-    class IdleAnimation : ICharacterAnimation
-    {
-        public string Name => "Idle";
-        public Vector2 PositionOffset { get; set; }
-        public bool IsCharacterSpeaking { get; set; }
-
-        Vector2 _idleTarget = Vector2.Zero;
-        Vector2 _idle = Vector2.Zero;
-        float _intensity = 5;
-        double _time = 0;
-        
-        public IdleAnimation()
-        {
-            
-        }
-
-        void ICharacterAnimation.Update(GameTime gameTime)
-        {
-            _time += gameTime.ElapsedGameTime.TotalSeconds;
-
-            PositionOffset = Vector2.SmoothStep(PositionOffset, _idle, 0.1f);
-            _idle = new Vector2(MathF.Sin(_idleTarget.X) * _intensity, MathF.Cos(_idleTarget.Y) * _intensity);
-
-            if (_time >= 0.25)
-            {
-                _idleTarget = new Vector2(Random.Shared.Next((int)-_intensity, (int)_intensity), Random.Shared.Next((int)-_intensity, (int)_intensity));
-
-                _time = 0;
-            }
-        }
-
-    }
-
     public class DefaultCharacter : ICharacter
     {
         public bool Speaking { get; set; }
@@ -52,22 +22,39 @@ namespace LiVerseClient
 
         Texture2D _currentFrame;
 
-        ICharacterAnimation idleAnimation;
-        ICharacterAnimation stateChangeAnimation;
+        ICharacterAnimation currentAnimation;
 
         public DefaultCharacter() 
         {
             _mouthClosed = Sprites.Texture2DFromFile(Game1.Instance.GraphicsDevice, "mouth_closed.png");
             _mouthOpened = Sprites.Texture2DFromFile(Game1.Instance.GraphicsDevice, "mouth_open.png");
 
-            idleAnimation = new IdleAnimation();
+            //currentAnimation = new IdleAnimation();
+            //currentAnimation = Game1.Instance.Animations.(animation => animation.Name == "default_idle");
+
+            // When the Client loads no animations are available, so when plugins start loading, look for the 'default_idle' animation
+            Game1.Instance.Animations.CollectionChanged += Animations_CollectionChanged;
+        }
+
+        void Animations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (currentAnimation == null)
+            {
+                currentAnimation = Game1.Instance.Animations.Single(animation => animation.Name == "default_idle");
+            }
         }
 
         public void Update(GameTime gameTime)
         {
-            idleAnimation?.Update(gameTime);
-            _Position = Vector2.SmoothStep(_Position, idleAnimation.PositionOffset, 28f * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            if (currentAnimation != null)
+            {
+                currentAnimation.Update(gameTime);
+                _Position = Vector2.SmoothStep(_Position, currentAnimation.PositionOffset, 28f * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
+                currentAnimation.IsCharacterSpeaking = Speaking;
+            }
+
+            // Change character frame
             if (Speaking)
             {
                 _currentFrame = _mouthOpened;
@@ -76,10 +63,7 @@ namespace LiVerseClient
             else
             {
                 _currentFrame = _mouthClosed;
-
             }
-
-            idleAnimation.IsCharacterSpeaking = Speaking;
         }
 
         public void Draw(SpriteBatch spriteBatch)

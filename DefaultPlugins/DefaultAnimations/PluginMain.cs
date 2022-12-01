@@ -1,4 +1,5 @@
-﻿using LiVerseFramework;
+﻿using DefaultAnimations.CharacterAnimations;
+using LiVerseFramework;
 
 namespace DefaultAnimations
 {
@@ -12,6 +13,9 @@ namespace DefaultAnimations
         public void Initialise(IClientInstance clientInstance)
         {
             this.clientInstance = clientInstance;
+
+            // Register character animations
+            clientInstance.AddCharacterAnimation(new IdleAnimation());
         }
 
         public void Unload()
