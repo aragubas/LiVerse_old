@@ -53,7 +53,7 @@ namespace LiVerseClient.PluginHost
                 throw new FileNotFoundException($"Could not find plugin's assembly. Assembly path: '{fullAssemblyPath}'");
             }
 
-            Assembly assembly = Assembly.LoadFrom(fullAssemblyPath);
+            Assembly assembly = Assembly.LoadFile(fullAssemblyPath);
             TypeInfo type = assembly.DefinedTypes.Where(ceira => ceira.Name == "PluginMain").FirstOrDefault();
 
             if (type == null)

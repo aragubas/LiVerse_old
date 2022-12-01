@@ -17,8 +17,8 @@ namespace LiVerseClient
     {
         public MMDevice Microphone { get; set; }
         public ICharacter Character { get; set; }
-        public static Game1 Instance;
         public bool TransparentMode { get; set; }
+        public static Game1 Instance;
 
         GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
@@ -28,7 +28,6 @@ namespace LiVerseClient
 
         VolumeLevelVisualizer _volumeLevel;
         DelayLevelVisualizer _delayLevel;
-
 
         Timer _delayResetTimer;
         float _delayValue = 0;
@@ -49,7 +48,8 @@ namespace LiVerseClient
         protected override void Initialize()
         {
             PluginHost.InstanceManager.LoadPlugin(this, "aragubas.tests.testplugin");
-            
+            PluginHost.InstanceManager.LoadPlugin(this, "aragubas.liverseCore.defaultAnimations");
+
             _waveIn = new WaveInEvent();
 
             //int waveInDeviceCount = WaveInEvent.DeviceCount;
