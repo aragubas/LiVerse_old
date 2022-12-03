@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace LiVerseFramework.AnaBanUI
 {
@@ -29,11 +30,11 @@ namespace LiVerseFramework.AnaBanUI
             }
         }
 
-        public void Resized()
+        public void WindowResized()
         {
-            foreach(Element element in _elements)
+            if (_elements.Count >= 1)
             {
-                element.Resized();
+                _elements[0].BoxSize = new Vector2(_clientInstance.GameInstance.Window.ClientBounds.Width, _clientInstance.GameInstance.Window.ClientBounds.Height);
             }
         }
 

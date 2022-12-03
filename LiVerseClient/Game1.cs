@@ -103,6 +103,8 @@ namespace LiVerseClient
 
             Window.ClientSizeChanged += Window_ClientSizeChanged;
 
+            Fonts.CommonGraphicsDevice = GraphicsDevice;
+
             PluginHost.InstanceManager.LoadPlugin(this, "aragubas.tests.testplugin");
             PluginHost.InstanceManager.LoadPlugin(this, "aragubas.liverseCore.defaultAnimations");
 
@@ -111,7 +113,7 @@ namespace LiVerseClient
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            UIRoot.Resized();
+            UIRoot.WindowResized();
         }
 
         private void _delayResetTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -131,7 +133,7 @@ namespace LiVerseClient
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Pre-Cache fonts
-            Fonts.LoadFont(GraphicsDevice, "Ubuntu.ttf", 14);
+            Fonts.LoadFont("Ubuntu.ttf", 14);
 
             _copyrightTextFont = new FontDescriptor("Ubuntu-Light.ttf", 24);
             CommonFont = new FontDescriptor("Ubuntu.ttf", 14);
@@ -184,10 +186,10 @@ namespace LiVerseClient
                 _volumeLevel.Draw(_spriteBatch);
 
 #if DEBUG
-                _spriteBatch.DrawString(Fonts.GetFont(GraphicsDevice, CommonFont), $"Frametime: {gameTime.ElapsedGameTime.TotalSeconds}", new Vector2(16, GraphicsDevice.Viewport.Height - 50), Color.White);
+                _spriteBatch.DrawString(Fonts.GetFont(CommonFont), $"Frametime: {gameTime.ElapsedGameTime.TotalSeconds}", new Vector2(16, GraphicsDevice.Viewport.Height - 50), Color.White);
 #endif
 
-                _spriteBatch.DrawString(Fonts.GetFont(GraphicsDevice, _copyrightTextFont), "LiVerse Alpha", new Vector2(16, GraphicsDevice.Viewport.Height - 38), Color.White);
+                _spriteBatch.DrawString(Fonts.GetFont(_copyrightTextFont), "LiVerse Alpha", new Vector2(16, GraphicsDevice.Viewport.Height - 38), Color.White);
             }
 
 

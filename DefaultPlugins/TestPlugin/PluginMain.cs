@@ -1,5 +1,6 @@
 ﻿using LiVerseFramework;
 using LiVerseFramework.AnaBanUI.Controls;
+using LiVerseFramework.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace TestPlugin
@@ -18,6 +19,11 @@ namespace TestPlugin
             VBox vBox = new VBox();
             vBox.Padding = new Vector2(14, 14);
             vBox.ID = "MainVBox";
+
+            var ceira = new FontDescriptor("Ubuntu.ttf", 14);
+            Label label = new("Label1 OwO", ceira);
+
+            vBox.AddElement(label);
 
             liverseClient.UIRoot.AddElement(vBox);
         }
