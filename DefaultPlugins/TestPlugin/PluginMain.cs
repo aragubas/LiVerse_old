@@ -1,4 +1,6 @@
 ﻿using LiVerseFramework;
+using LiVerseFramework.AnaBanUI.Controls;
+using Microsoft.Xna.Framework;
 
 namespace TestPlugin
 {
@@ -13,6 +15,11 @@ namespace TestPlugin
         {
             liverseClient = clientInstance;
 
+            VBox vBox = new VBox();
+            vBox.Padding = new Vector2(14, 14);
+            vBox.ID = "MainVBox";
+
+            liverseClient.UIRoot.AddElement(vBox);
         }
 
         public void Unload()

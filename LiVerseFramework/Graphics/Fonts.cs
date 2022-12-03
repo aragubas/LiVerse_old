@@ -1,18 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using SpriteFontPlus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiVerseFramework.Graphics
 {
     public static class Fonts
     {
-        static List<SpriteFont> CachedFonts = new List<SpriteFont>();
-        static List<string> CachedFonts_Key = new List<string>();
+        static Dictionary<FontDescriptor, SpriteFont> Cache = new();
 
         /// <summary>
         /// Loads a font into the font cache
@@ -37,30 +30,21 @@ namespace LiVerseFramework.Graphics
                          }
                      );
 
-            CachedFonts.Add(fontBakeResult.CreateSpriteFont(graphicsDevice));
-            CachedFonts_Key.Add($"{FontDescName}:{FontSize}");
+            FontDescriptor fontDescriptor = new(FontDescName, FontSize);
+
+            Cache.Add(fontDescriptor, fontBakeResult.CreateSpriteFont(graphicsDevice));
         }
 
-        public static SpriteFont GetFont(GraphicsDevice graphicsDevice, string FontPath, int FontSize)
+        public static SpriteFont GetFont(GraphicsDevice graphicsDevice, FontDescriptor fontDescriptor)
         {
-            int FontIndex = CachedFonts_Key.IndexOf($"{FontPath}:{FontSize}");
-
-            if (FontSize < 1) { FontSize = 1; }
-
-            // Font was not found in cache
-            if (FontIndex == -1)
+            if (Cache.TryGetValue(fontDescriptor, out SpriteFont spriteFont))
             {
-                LoadFont(graphicsDevice, FontPath, FontSize);
-
-                FontIndex = CachedFonts_Key.IndexOf($"{FontPath}:{FontSize}");
-
-                if (FontIndex == -1)
-                {
-                    throw new KeyNotFoundException($"Could not find font '{FontPath}:{FontSize}'");
-                }
+                return spriteFont;
             }
 
-            return CachedFonts[FontIndex];
+            LoadFont(graphicsDevice, fontDescriptor.Path, fontDescriptor.FontSize);
+
+            return Cache[fontDescriptor];
         }
 
     }

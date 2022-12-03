@@ -24,7 +24,7 @@ namespace DefaultAnimations.CharacterAnimations
         {
             _time += gameTime.ElapsedGameTime.TotalSeconds;
 
-            float f = 0.25f;
+            float f = 0.3f;
             PositionOffset = Vector2.Lerp(PositionOffset, _idle, 1 - MathF.Pow(f, (float)gameTime.ElapsedGameTime.TotalSeconds));
 
             _idle = new Vector2(MathF.Sin(_idleTarget.X) * _intensity, MathF.Cos(_idleTarget.Y) * _intensity);

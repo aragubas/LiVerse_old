@@ -1,4 +1,5 @@
-﻿using LiVerseFramework.Character;
+﻿using LiVerseFramework;
+using LiVerseFramework.Character;
 using LiVerseFramework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,23 +26,27 @@ namespace LiVerseClient
         ICharacterAnimation animationLayer1;
         ICharacterAnimation animationLayer2;
 
-        public DefaultCharacter() 
+        readonly Game1 _clientReferece;
+
+        public DefaultCharacter(Game1 clientInstance) 
         {
-            _mouthClosed = Sprites.Texture2DFromFile(Game1.Instance.GraphicsDevice, "mouth_closed.png");
-            _mouthOpened = Sprites.Texture2DFromFile(Game1.Instance.GraphicsDevice, "mouth_open.png");
+            _clientReferece = clientInstance;
+
+            _mouthClosed = Sprites.Texture2DFromFile(_clientReferece.GraphicsDevice, "mouth_closed.png");
+            _mouthOpened = Sprites.Texture2DFromFile(_clientReferece.GraphicsDevice, "mouth_open.png");
 
             //currentAnimation = new IdleAnimation();
             //currentAnimation = Game1.Instance.Animations.(animation => animation.Name == "default_idle");
 
             // When the Client loads no animations are available, so when plugins start loading, look for the 'default_idle' animation
-            Game1.Instance.Animations.CollectionChanged += Animations_CollectionChanged;
+            _clientReferece.Animations.CollectionChanged += Animations_CollectionChanged;
         }
 
         void Animations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (animationLayer1 == null)
             {
-                animationLayer1 = Game1.Instance.Animations.Single(animation => animation.Name == "default_idle");
+                animationLayer1 = _clientReferece.Animations.Single(animation => animation.Name == "default_idle");
             }
         }
 

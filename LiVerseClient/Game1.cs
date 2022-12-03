@@ -1,5 +1,6 @@
 ﻿using Cyotek.Drawing.BitmapFont;
 using LiVerseFramework;
+using LiVerseFramework.AnaBanUI;
 using LiVerseFramework.Character;
 using LiVerseFramework.Graphics;
 using Microsoft.Xna.Framework;
@@ -21,10 +22,11 @@ namespace LiVerseClient
         public ICharacter Character { get; set; }
         public bool TransparentMode { get; set; }
         public ObservableCollection<ICharacterAnimation> Animations { get; set; } = new();
+        public UIRoot UIRoot { get; }
+        public Game GameInstance { get; }
 
-        public static Game1 Instance;
 
-        public SpriteFont CommonFont;
+        public FontDescriptor CommonFont;
 
         GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
@@ -39,7 +41,7 @@ namespace LiVerseClient
         float _delayValueTarget = 0;
 
         KeyboardState _oldKeyboardState;
-        SpriteFont _copyrightTextFont;
+        FontDescriptor _copyrightTextFont;
 
         GameTime _lastGameTime;
 
@@ -55,21 +57,14 @@ namespace LiVerseClient
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            Instance = this;
+            UIRoot = new UIRoot(this);
+
+            GameInstance = this;
         }
 
         protected override void Initialize()
         {
             _waveIn = new WaveInEvent();
-
-            //int waveInDeviceCount = WaveInEvent.DeviceCount;
-            //Console.WriteLine($"{waveInDeviceCount} Devices Detected");
-            //Console.WriteLine($"Find the device ID of your mic below and use it as the value for the value of _micDeviceId");
-            //for (int i = 0; i < waveInDeviceCount; i++)
-            //{
-            //    WaveInCapabilities capabilities = ;
-            //    Console.WriteLine($"Device ID: {i} | Name: {capabilities.ProductName}");
-            //}
 
             _delayResetTimer = new Timer();
             _delayResetTimer.Interval = 50;
@@ -96,7 +91,8 @@ namespace LiVerseClient
             _volumeLevel = new VolumeLevelVisualizer(new RectangleF(32, 32, 20, 400));
             _delayLevel = new DelayLevelVisualizer(new Rectangle(58, 32, 20, 400));
 
-            Character = new DefaultCharacter();
+            Character = new DefaultCharacter(this);
+
             Window.AllowUserResizing = true;
 
             _graphics.PreferredBackBufferWidth = 640;
@@ -105,10 +101,17 @@ namespace LiVerseClient
             IsFixedTimeStep = false;
             _graphics.ApplyChanges();
 
+            Window.ClientSizeChanged += Window_ClientSizeChanged;
+
             PluginHost.InstanceManager.LoadPlugin(this, "aragubas.tests.testplugin");
             PluginHost.InstanceManager.LoadPlugin(this, "aragubas.liverseCore.defaultAnimations");
 
             base.Initialize();
+        }
+
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            UIRoot.Resized();
         }
 
         private void _delayResetTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -127,11 +130,11 @@ namespace LiVerseClient
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // Pre-Cache font
+            // Pre-Cache fonts
             Fonts.LoadFont(GraphicsDevice, "Ubuntu.ttf", 14);
-            _copyrightTextFont = Fonts.GetFont(GraphicsDevice, "Ubuntu-Light.ttf", 24);
 
-            CommonFont = Fonts.GetFont(GraphicsDevice, "Ubuntu.ttf", 14);
+            _copyrightTextFont = new FontDescriptor("Ubuntu-Light.ttf", 24);
+            CommonFont = new FontDescriptor("Ubuntu.ttf", 14);
 
             Window.Title = "LiVerse";
         }
@@ -161,12 +164,16 @@ namespace LiVerseClient
 
             _lastGameTime = gameTime;
 
+            UIRoot.Update(gameTime);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(TransparentMode ? Color.Transparent : Color.CornflowerBlue);
+
+            UIRoot.Draw(_spriteBatch);
 
             _spriteBatch.Begin();
 
@@ -175,13 +182,17 @@ namespace LiVerseClient
             {
                 _delayLevel.Draw(_spriteBatch);
                 _volumeLevel.Draw(_spriteBatch);
-                
-                _spriteBatch.DrawString(CommonFont, $"Frametime: {gameTime.ElapsedGameTime.TotalSeconds}", new Vector2(16, GraphicsDevice.Viewport.Height - 50), Color.White);
-                _spriteBatch.DrawString(_copyrightTextFont, "LiVerse Alpha", new Vector2(16, GraphicsDevice.Viewport.Height - 38), Color.White);
+
+#if DEBUG
+                _spriteBatch.DrawString(Fonts.GetFont(GraphicsDevice, CommonFont), $"Frametime: {gameTime.ElapsedGameTime.TotalSeconds}", new Vector2(16, GraphicsDevice.Viewport.Height - 50), Color.White);
+#endif
+
+                _spriteBatch.DrawString(Fonts.GetFont(GraphicsDevice, _copyrightTextFont), "LiVerse Alpha", new Vector2(16, GraphicsDevice.Viewport.Height - 38), Color.White);
             }
 
 
             _spriteBatch.End();
+
 
             base.Draw(gameTime);
         }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LiVerseFramework
+﻿namespace LiVerseFramework
 {
     public interface IPlugin
     {
@@ -12,7 +6,7 @@ namespace LiVerseFramework
         /// Unique idenfier for this specific plugin
         /// </summary>
         public string Id { get; }
-        
+
         /// <summary>
         /// Plugin Name shown in UI's
         /// </summary>

@@ -1,4 +1,6 @@
-﻿using LiVerseFramework.Character;
+﻿using LiVerseFramework.AnaBanUI;
+using LiVerseFramework.Character;
+using Microsoft.Xna.Framework;
 using NAudio.CoreAudioApi;
 
 namespace LiVerseFramework
@@ -17,11 +19,19 @@ namespace LiVerseFramework
         /// </summary>
         public bool TransparentMode { get; set; }
 
+        public Game? GameInstance { get; }
+
+        /// <summary>
+        /// Main UIRoot used by all plugins
+        /// </summary>
+        public UIRoot UIRoot { get; }
+
         /// <summary>
         /// Method called by Plugins for registering animations
         /// </summary>
         /// <param name="animation">An <seealso cref="ICharacterAnimation"/> to be added</param>
         public void AddCharacterAnimation(ICharacterAnimation animation);
+
 
     }
 }
