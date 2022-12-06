@@ -1,18 +1,21 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LiVerseFramework;
+using LiVerseFramework.AnaBanUI;
+using LiVerseFramework.AnaBanUI.Controls;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace LiVerseFramework.AnaBanUI
+namespace LiVerseClient
 {
-    public class UIRoot
+    internal class UIRoot : IUiRoot
     {
         readonly IClientInstance _clientInstance;
         List<Element> _elements = new();
+        List<WindowBase> _windows = new();
 
         public UIRoot(IClientInstance clientInstance)
         {
@@ -30,6 +33,11 @@ namespace LiVerseFramework.AnaBanUI
             }
         }
 
+        public void AddWindow(WindowBase window)
+        {
+            _windows.Add(window);
+        }
+
         public void WindowResized()
         {
             if (_elements.Count >= 1)
@@ -38,7 +46,7 @@ namespace LiVerseFramework.AnaBanUI
             }
         }
 
-        public void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime)
         {
             foreach (Element element in _elements)
             {
@@ -57,6 +65,5 @@ namespace LiVerseFramework.AnaBanUI
 
             spriteBatch.End();
         }
-
     }
 }

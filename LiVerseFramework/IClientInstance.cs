@@ -24,7 +24,7 @@ namespace LiVerseFramework
         /// <summary>
         /// Main UIRoot used by all plugins
         /// </summary>
-        public UIRoot UIRoot { get; }
+        public IUiRoot UIRoot { get; }
 
         /// <summary>
         /// Method called by Plugins for registering animations

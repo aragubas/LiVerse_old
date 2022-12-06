@@ -22,7 +22,7 @@ namespace LiVerseClient
         public ICharacter Character { get; set; }
         public bool TransparentMode { get; set; }
         public ObservableCollection<ICharacterAnimation> Animations { get; set; } = new();
-        public UIRoot UIRoot { get; }
+        public IUiRoot UIRoot { get; }
         public Game GameInstance { get; }
 
 
