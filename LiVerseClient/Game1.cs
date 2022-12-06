@@ -43,6 +43,7 @@ namespace LiVerseClient
         KeyboardState _oldKeyboardState;
         FontDescriptor _copyrightTextFont;
 
+        // For debugging purposes
         GameTime _lastGameTime;
 
         public void AddCharacterAnimation(ICharacterAnimation animation)

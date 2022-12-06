@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 
-namespace LiVerseFramework.AnaBanUI.Controls
+namespace LiVerseFramework.AnaBanUI.Controls.Containers
 {
     public class VBox : ContainerBase
     {
@@ -38,11 +38,11 @@ namespace LiVerseFramework.AnaBanUI.Controls
 
                 return;
             }
-            
+
             // TODO: Needs iteration count
             float nextY = 0;
 
-            for(int i = 0; i < ChildElements.Count; i++)
+            for (int i = 0; i < ChildElements.Count; i++)
             {
                 Element element = ChildElements[i];
                 float nextMargin = 0;
@@ -51,15 +51,22 @@ namespace LiVerseFramework.AnaBanUI.Controls
                 // If not the last item
                 if (i + 1 < ChildElements.Count)
                 {
-                    nextMargin = Math.Abs(ChildElements[i + 1].Margin.Y - element.Margin.Y);
+                    //nextMargin = Math.Abs(ChildElements[i + 1].Margin.Y - element.Margin.Y);
 
                     if (element.Margin.Y >= ChildElements[i + 1].Margin.Y)
                     {
                         nextMargin = element.Margin.Y;
                     }
+
+                    if (element.Margin.Y <= ChildElements[i + 1].Margin.Y)
+                    {
+                        nextMargin = ChildElements[i + 1].Margin.Y;
+                    }
+
+
                 }
 
-                // First Element
+                // If the first element, respect Y margin
                 if (i == 0)
                 {
                     nextY = element.Margin.Y;
@@ -87,7 +94,7 @@ namespace LiVerseFramework.AnaBanUI.Controls
 
         public override void Update(GameTime gameTime)
         {
-            foreach (Element element in ChildElements)
+            foreach (Element element in ChildElements.Reverse<Element>())
             {
                 element.Update(gameTime);
             }

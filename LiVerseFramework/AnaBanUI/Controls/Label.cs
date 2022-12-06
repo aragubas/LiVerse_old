@@ -14,6 +14,7 @@ namespace LiVerseFramework.AnaBanUI.Controls
     {
         FontDescriptor _fontDescriptor;
         string _text;
+
         public string Text 
         {
             get => _text;

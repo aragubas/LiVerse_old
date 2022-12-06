@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiVerseFramework.AnaBanUI.Controls
+namespace LiVerseFramework.AnaBanUI.Controls.Containers
 {
     public abstract class ContainerBase : Element
     {

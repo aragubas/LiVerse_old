@@ -1,5 +1,6 @@
 ﻿using LiVerseFramework;
 using LiVerseFramework.AnaBanUI.Controls;
+using LiVerseFramework.AnaBanUI.Controls.Containers;
 using LiVerseFramework.Graphics;
 using Microsoft.Xna.Framework;
 
@@ -29,7 +30,7 @@ namespace TestPlugin
             label2.ID = "label2";
             label3.ID = "label3";
 
-            label.Margin = new Vector2(3, 6);
+            label.Margin = new Vector2(3, 4);
             label2.Margin = new Vector2(3, 5);
 
             vBox.AddElement(label);
