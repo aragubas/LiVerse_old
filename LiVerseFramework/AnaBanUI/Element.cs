@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LiVerseFramework.AnaBanUI.Controls;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LiVerseFramework.AnaBanUI
 {
-    public abstract class Element
+    public abstract class Element : IElementBase
     {
         Vector2 _contentSize;
         Vector2 _boxSize;
@@ -59,12 +60,12 @@ namespace LiVerseFramework.AnaBanUI
                 if (MaximumContentSize != Vector2.Zero &&
                     (_contentSize.X > MaximumContentSize.X || _contentSize.Y > MaximumContentSize.Y))
                 {
-                    _contentSize = MaximumContentSize + Padding;
+                    _contentSize = MaximumContentSize + _padding;
                 }
 
                 if (_contentSize.X < MinimumContentSize.X || _contentSize.Y < MinimumContentSize.Y)
                 {
-                    _contentSize = MinimumContentSize + Padding;
+                    _contentSize = MinimumContentSize + _padding;
                 }
 
                 ResizeBox();
@@ -79,7 +80,7 @@ namespace LiVerseFramework.AnaBanUI
 
         public Vector2 ContentPosition
         {
-            get => Position + (Padding / 2);
+            get => Position + (_padding / 2);
         }
 
         public RectangleF ContentRectangle

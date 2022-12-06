@@ -86,7 +86,7 @@ namespace LiVerseClient
         {
             Vector2 newSize = new Vector2(_currentFrame.Width / 2, _currentFrame.Height / 2);
 
-            spriteBatch.Draw(_currentFrame, new Vector2(spriteBatch.GraphicsDevice.Viewport.Width / 2 + _Position.X, spriteBatch.GraphicsDevice.Viewport.Height / 2 + _Position.Y), null, Color.White, 0f, newSize, new Vector2(0.5f, 0.5f), SpriteEffects.None, 0f);
+            //spriteBatch.Draw(_currentFrame, new Vector2(spriteBatch.GraphicsDevice.Viewport.Width / 2 + _Position.X, spriteBatch.GraphicsDevice.Viewport.Height / 2 + _Position.Y), null, Color.White, 0f, newSize, new Vector2(0.5f, 0.5f), SpriteEffects.None, 0f);
             
             if (DrawBoundaries)
                 spriteBatch.DrawRectangle(new RectangleF(spriteBatch.GraphicsDevice.Viewport.Width / 2 - newSize.X / 2 + _Position.X, spriteBatch.GraphicsDevice.Viewport.Height / 2 - newSize.Y / 2 + _Position.Y, newSize.X, newSize.Y), Color.Magenta);

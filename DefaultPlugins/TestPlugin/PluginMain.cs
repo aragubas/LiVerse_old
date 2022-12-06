@@ -33,6 +33,8 @@ namespace TestPlugin
             label.Margin = new Vector2(3, 4);
             label2.Margin = new Vector2(3, 5);
 
+            label.Padding = new Vector2(4, 4);
+
             vBox.AddElement(label);
             vBox.AddElement(label2);
             vBox.AddElement(label3);

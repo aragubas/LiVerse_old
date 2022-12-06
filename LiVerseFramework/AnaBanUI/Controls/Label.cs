@@ -46,6 +46,7 @@ namespace LiVerseFramework.AnaBanUI.Controls
         {
             spriteBatch.DrawRectangle(ContentRectangle, Color.Blue, 1);
             spriteBatch.DrawRectangle(BoxRectangle, Color.Magenta, 1);
+            //spriteBatch.DrawRectangle(new RectangleF(Position.X - Margin.X, Position.Y - Margin.Y, BoxSize.X + Margin.X * 2, BoxSize.Y + Margin.Y * 2), Color.Yellow, 1);
 
             spriteBatch.DrawString(Fonts.GetFont(_fontDescriptor), Text, ContentPosition, Color.White);
         }
