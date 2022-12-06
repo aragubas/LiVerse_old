@@ -62,8 +62,6 @@ namespace LiVerseFramework.AnaBanUI.Controls.Containers
                     {
                         nextMargin = ChildElements[i + 1].Margin.Y;
                     }
-
-
                 }
 
                 // If the first element, respect Y margin
