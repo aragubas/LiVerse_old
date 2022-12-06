@@ -9,9 +9,6 @@ namespace LiVerseFramework.AnaBanUI.Controls
     {
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawRectangle(ContentRectangle, Color.Blue, 1);
-            spriteBatch.DrawRectangle(BoxRectangle, Color.Magenta, 1);
-
             foreach (Element element in ChildElements)
             {
                 element.Draw(spriteBatch);
@@ -19,6 +16,12 @@ namespace LiVerseFramework.AnaBanUI.Controls
         }
 
         public override void Resized() => CalculateUI();
+
+        public override void AddElement(Element element)
+        {
+            base.AddElement(element);
+            CalculateUI();
+        }
 
         void CalculateUI()
         {
@@ -30,10 +33,56 @@ namespace LiVerseFramework.AnaBanUI.Controls
             {
                 Element element = ChildElements[0];
 
+                element.Position = Vector2.Zero;
                 element.BoxSize = BoxSize;
 
                 return;
             }
+            
+            // TODO: Needs iteration count
+            float nextY = 0;
+
+            for(int i = 0; i < ChildElements.Count; i++)
+            {
+                Element element = ChildElements[i];
+                float nextMargin = 0;
+
+
+                // If not the last item
+                if (i + 1 < ChildElements.Count)
+                {
+                    nextMargin = Math.Abs(ChildElements[i + 1].Margin.Y - element.Margin.Y);
+
+                    if (element.Margin.Y >= ChildElements[i + 1].Margin.Y)
+                    {
+                        nextMargin = element.Margin.Y;
+                    }
+                }
+
+                // First Element
+                if (i == 0)
+                {
+                    nextY = element.Margin.Y;
+                }
+
+                element.Position = new Vector2(element.Margin.X, nextY);
+                nextY += element.BoxRectangle.Height + nextMargin;
+            }
+
+            //foreach (Element element in ChildElements)
+            //{
+            //    if (nextY == 0) 
+            //    {
+            //        nextY += element.BoxRectangle.Height + element.Margin.Y;
+
+            //        continue;
+            //    }
+            //    element.Position = new Vector2(0, nextY);
+
+            //    nextY += element.BoxRectangle.Height + element.Margin.Y;
+            //}
+
+
         }
 
         public override void Update(GameTime gameTime)

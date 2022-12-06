@@ -15,7 +15,7 @@ namespace LiVerseClient
     {
         public bool Speaking { get; set; }
         public int ShakeIntensity = 10;
-        public bool DrawBoundaries { get; set; } = true;
+        public bool DrawBoundaries { get; set; } = false;
 
         Texture2D _mouthClosed;
         Texture2D _mouthOpened;

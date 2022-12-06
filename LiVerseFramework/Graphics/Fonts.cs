@@ -6,6 +6,7 @@ namespace LiVerseFramework.Graphics
     public static class Fonts
     {
         static Dictionary<FontDescriptor, SpriteFont> Cache = new();
+
         public static GraphicsDevice? CommonGraphicsDevice;
 
         /// <summary>

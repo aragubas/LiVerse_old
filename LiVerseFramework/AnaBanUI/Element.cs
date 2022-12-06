@@ -31,7 +31,19 @@ namespace LiVerseFramework.AnaBanUI
 
             set
             {
-                _contentSize = value - _padding;
+                _contentSize = value + _padding;
+
+                if (MaximumContentSize != Vector2.Zero &&
+                    (_contentSize.X > MaximumContentSize.X || _contentSize.Y > MaximumContentSize.Y))
+                {
+                    _contentSize = MaximumContentSize + Padding;
+                }
+
+                if (_contentSize.X < MinimumContentSize.X || _contentSize.Y < MinimumContentSize.Y)
+                {
+                    _contentSize = MinimumContentSize + Padding;
+                }
+
                 ResizeBox();
             }
         }
@@ -42,10 +54,24 @@ namespace LiVerseFramework.AnaBanUI
 
             set
             {
-                _contentSize = value;
+                _contentSize = value + _padding;
+
+                if (MaximumContentSize != Vector2.Zero &&
+                    (_contentSize.X > MaximumContentSize.X || _contentSize.Y > MaximumContentSize.Y))
+                {
+                    _contentSize = MaximumContentSize + Padding;
+                }
+
+                if (_contentSize.X < MinimumContentSize.X || _contentSize.Y < MinimumContentSize.Y)
+                {
+                    _contentSize = MinimumContentSize + Padding;
+                }
+
                 ResizeBox();
             }
         }
+        public Vector2 MaximumContentSize { get; set; } = Vector2.Zero;
+        public Vector2 MinimumContentSize { get; set; } = Vector2.Zero;
 
         public Vector2 Margin { get; set; } = Vector2.Zero;
 

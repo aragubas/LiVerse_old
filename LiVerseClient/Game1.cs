@@ -138,7 +138,7 @@ namespace LiVerseClient
             _copyrightTextFont = new FontDescriptor("Ubuntu-Light.ttf", 24);
             CommonFont = new FontDescriptor("Ubuntu.ttf", 14);
 
-            Window.Title = "LiVerse";
+            Window.Title = "LiVerse Alpha";
         }
 
         protected override void Update(GameTime gameTime)
