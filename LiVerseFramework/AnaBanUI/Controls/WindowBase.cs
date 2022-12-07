@@ -50,7 +50,12 @@ namespace LiVerseFramework.AnaBanUI.Controls
             get => new Rectangle(Point.Zero, Size.ToPoint());
         }
 
-        string _title;
+        protected Rectangle TitlebarRectangle
+        {
+            get => new Rectangle(Point.Zero, new Point((int)Size.X, TitlebarHeight));
+        }
+
+        string _title = "AnaBan Window";
         public string Title
         {
             get => _title;
@@ -60,6 +65,8 @@ namespace LiVerseFramework.AnaBanUI.Controls
                 TitleChanged();
             }
         }
+
+        protected int TitlebarHeight = 14;
 
         void UpdateRectangle()
         {
