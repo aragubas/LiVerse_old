@@ -28,6 +28,12 @@ namespace LiVerseFramework.AnaBanUI
         /// <param name="spriteBatch">SpriteBatch</param>
         public void Draw(SpriteBatch spriteBatch);
 
+        /// <summary> 
+        /// Called after Draw, draw all windows, windows are drawn on top of everything 
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch</param>
+        public void DrawWindows(SpriteBatch spriteBatch);
+
         /// <summary>
         /// Called every frame before Update
         /// </summary>

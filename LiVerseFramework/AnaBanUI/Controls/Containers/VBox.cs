@@ -7,15 +7,28 @@ namespace LiVerseFramework.AnaBanUI.Controls.Containers
 {
     public class VBox : ContainerBase
     {
+        public VBox()
+        {
+
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.End();
+
+            spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(ContentPosition, 0f)));
+
             foreach (Element element in ChildElements)
             {
                 element.Draw(spriteBatch);
             }
+
+            spriteBatch.End();
+
+            spriteBatch.Begin();
         }
 
-        public override void Resized() => CalculateUI();
+        protected override void Resized() => CalculateUI();
 
         public override void AddElement(Element element)
         {
@@ -94,6 +107,7 @@ namespace LiVerseFramework.AnaBanUI.Controls.Containers
         {
             foreach (Element element in ChildElements.Reverse<Element>())
             {
+                element.ParentContentPosition = ContentPosition;
                 element.Update(gameTime);
             }
 

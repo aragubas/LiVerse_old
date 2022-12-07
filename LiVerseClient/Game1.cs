@@ -196,6 +196,7 @@ namespace LiVerseClient
 
             _spriteBatch.End();
 
+            UIRoot.DrawWindows(_spriteBatch);
 
             base.Draw(gameTime);
         }

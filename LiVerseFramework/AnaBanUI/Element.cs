@@ -12,6 +12,7 @@ namespace LiVerseFramework.AnaBanUI
 {
     public abstract class Element : IElementBase
     {
+        #region Size Properties
         Vector2 _contentSize;
         Vector2 _boxSize;
         Vector2 _padding;
@@ -37,12 +38,12 @@ namespace LiVerseFramework.AnaBanUI
                 if (MaximumContentSize != Vector2.Zero &&
                     (_contentSize.X > MaximumContentSize.X || _contentSize.Y > MaximumContentSize.Y))
                 {
-                    _contentSize = MaximumContentSize + Padding;
+                    _contentSize = MaximumContentSize + _padding;
                 }
 
                 if (_contentSize.X < MinimumContentSize.X || _contentSize.Y < MinimumContentSize.Y)
                 {
-                    _contentSize = MinimumContentSize + Padding;
+                    _contentSize = MinimumContentSize + _padding;
                 }
 
                 ResizeBox();
@@ -55,32 +56,53 @@ namespace LiVerseFramework.AnaBanUI
 
             set
             {
-                _contentSize = value + _padding;
+                _contentSize = value + (_padding / 2);
 
                 if (MaximumContentSize != Vector2.Zero &&
                     (_contentSize.X > MaximumContentSize.X || _contentSize.Y > MaximumContentSize.Y))
                 {
-                    _contentSize = MaximumContentSize + _padding;
+                    _contentSize = MaximumContentSize + (_padding / 2);
                 }
 
                 if (_contentSize.X < MinimumContentSize.X || _contentSize.Y < MinimumContentSize.Y)
                 {
-                    _contentSize = MinimumContentSize + _padding;
+                    _contentSize = MinimumContentSize + (_padding / 2);
                 }
 
                 ResizeBox();
             }
         }
+
         public Vector2 MaximumContentSize { get; set; } = Vector2.Zero;
+
         public Vector2 MinimumContentSize { get; set; } = Vector2.Zero;
+        #endregion
 
-        public Vector2 Margin { get; set; } = Vector2.Zero;
+        Vector2 _margin;
+        public Vector2 Margin
+        {
+            get => _margin;
+            set
+            {
+                _margin = value;
+                Moved();
+            }
+        }
 
-        public Vector2 Position { get; set; } = Vector2.Zero;
+        Vector2 _position;
+        public Vector2 Position
+        {
+            get => _position;
+            set
+            {
+                _position = value;
+                Moved();
+            }
+        }
 
         public Vector2 ContentPosition
         {
-            get => Position + (_padding / 2);
+            get => Position + (_padding);
         }
 
         public RectangleF ContentRectangle
@@ -95,13 +117,24 @@ namespace LiVerseFramework.AnaBanUI
 
         public string ID { get; set; } = string.Empty;
 
+        public Vector2 ParentContentPosition { get; set; } = Vector2.Zero;
+
+        public Vector2 GlobalPosition
+        {
+            get => Position + ParentContentPosition;
+        }
+        
+        public bool Visible { get; set; } = true;
+
         void ResizeBox()
         {
             _boxSize = _contentSize + _padding;
             Resized();
         }
 
-        public virtual void Resized() { }
+        protected virtual void Resized() { }
+
+        protected virtual void Moved() { }
 
         public virtual void Draw(SpriteBatch spriteBatch) { }
 

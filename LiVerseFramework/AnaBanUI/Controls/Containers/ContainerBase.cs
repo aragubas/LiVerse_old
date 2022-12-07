@@ -14,6 +14,7 @@ namespace LiVerseFramework.AnaBanUI.Controls.Containers
 
         public virtual void AddElement(Element element)
         {
+            element.ParentContentPosition = ContentPosition;
             ChildElements.Add(element);
         }
 

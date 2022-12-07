@@ -48,6 +48,11 @@ namespace LiVerseClient
 
         public void Update(GameTime gameTime)
         {
+            foreach (WindowBase window in _windows)
+            {
+                window.Update(gameTime);
+            }
+
             foreach (Element element in _elements)
             {
                 element.Update(gameTime);
@@ -65,5 +70,14 @@ namespace LiVerseClient
 
             spriteBatch.End();
         }
+
+        public void DrawWindows(SpriteBatch spriteBatch)
+        {
+            foreach (WindowBase window in _windows)
+            {
+                window.Draw(spriteBatch);
+            }
+        }
+
     }
 }

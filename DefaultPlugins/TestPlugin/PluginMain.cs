@@ -40,6 +40,12 @@ namespace TestPlugin
             vBox.AddElement(label3);
 
             liverseClient.UIRoot.AddElement(vBox);
+
+
+            Window window = new Window();
+            window.Rectangle = new Rectangle(20, 20, 250, 150);
+
+            liverseClient.UIRoot.AddWindow(window);
         }
 
         public void Unload()
