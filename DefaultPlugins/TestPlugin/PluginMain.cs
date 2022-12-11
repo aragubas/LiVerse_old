@@ -30,7 +30,7 @@ namespace TestPlugin
             label2.ID = "label2";
             label3.ID = "label3";
 
-            label.Margin = new Vector2(3, 4);
+            label.Margin = new Vector2(4, 4);
             label2.Margin = new Vector2(3, 5);
 
             label.Padding = new Vector2(4, 4);
@@ -42,10 +42,10 @@ namespace TestPlugin
             liverseClient.UIRoot.AddElement(vBox);
 
 
-            Window window = new Window();
-            window.Rectangle = new Rectangle(20, 20, 250, 150);
+            //Window window = new Window();
+            //window.Rectangle = new Rectangle(20, 20, 250, 150);
 
-            liverseClient.UIRoot.AddWindow(window);
+            //liverseClient.UIRoot.AddWindow(window);
         }
 
         public void Unload()

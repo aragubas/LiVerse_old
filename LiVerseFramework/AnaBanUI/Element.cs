@@ -33,17 +33,17 @@ namespace LiVerseFramework.AnaBanUI
 
             set
             {
-                _contentSize = value + _padding;
+                _contentSize = value;
 
                 if (MaximumContentSize != Vector2.Zero &&
                     (_contentSize.X > MaximumContentSize.X || _contentSize.Y > MaximumContentSize.Y))
                 {
-                    _contentSize = MaximumContentSize + _padding;
+                    _contentSize = MaximumContentSize;
                 }
 
                 if (_contentSize.X < MinimumContentSize.X || _contentSize.Y < MinimumContentSize.Y)
                 {
-                    _contentSize = MinimumContentSize + _padding;
+                    _contentSize = MinimumContentSize;
                 }
 
                 ResizeBox();
@@ -56,17 +56,17 @@ namespace LiVerseFramework.AnaBanUI
 
             set
             {
-                _contentSize = value + (_padding / 2);
+                _contentSize = value;
 
                 if (MaximumContentSize != Vector2.Zero &&
                     (_contentSize.X > MaximumContentSize.X || _contentSize.Y > MaximumContentSize.Y))
                 {
-                    _contentSize = MaximumContentSize + (_padding / 2);
+                    _contentSize = MaximumContentSize;
                 }
 
                 if (_contentSize.X < MinimumContentSize.X || _contentSize.Y < MinimumContentSize.Y)
                 {
-                    _contentSize = MinimumContentSize + (_padding / 2);
+                    _contentSize = MinimumContentSize;
                 }
 
                 ResizeBox();
@@ -102,7 +102,7 @@ namespace LiVerseFramework.AnaBanUI
 
         public Vector2 ContentPosition
         {
-            get => Position + (_padding);
+            get => Position + _padding;
         }
 
         public RectangleF ContentRectangle
@@ -128,7 +128,7 @@ namespace LiVerseFramework.AnaBanUI
 
         void ResizeBox()
         {
-            _boxSize = _contentSize + _padding;
+            _boxSize = _contentSize + (_padding * 2);
             Resized();
         }
 
