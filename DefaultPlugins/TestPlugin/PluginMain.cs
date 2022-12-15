@@ -50,6 +50,8 @@ namespace TestPlugin
             //window.Rectangle = new Rectangle(20, 20, 250, 150);
 
             //liverseClient.UIRoot.AddWindow(window);
+
+            SoundEffectManager.PlaySoundEffect("core.startup_short", 1.0f);
         }
 
         public void Unload()

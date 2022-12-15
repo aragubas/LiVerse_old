@@ -44,6 +44,7 @@ namespace LiVerseFramework.AnaBanUI.Controls
 
         ButtonState _state = ButtonState.Normal;
         bool _mouseDownLock = false;
+        bool _soundEffectToggle = false;
 
         MouseState _oldMouseState;
 
@@ -77,7 +78,14 @@ namespace LiVerseFramework.AnaBanUI.Controls
                 {
                     _state = ButtonState.Active;
 
-                }else { _state = ButtonState.Hover; }
+                    if (_soundEffectToggle)
+                    {
+                        _soundEffectToggle = false;
+                        SoundEffectManager.PlaySoundEffect("core.click", 1.0f);
+                    }
+
+                }
+                else { _state = ButtonState.Hover; _soundEffectToggle = true; }
 
             }
             else

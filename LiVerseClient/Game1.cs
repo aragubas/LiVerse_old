@@ -12,6 +12,7 @@ using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Timers;
 
 namespace LiVerseClient
@@ -106,6 +107,10 @@ namespace LiVerseClient
 
             Fonts.CommonGraphicsDevice = GraphicsDevice;
 
+            SoundEffectManager.LoadSound("core", Path.Combine(Environment.CurrentDirectory, "Content", "Sounds", "click.wav"));
+            SoundEffectManager.LoadSound("core", Path.Combine(Environment.CurrentDirectory, "Content", "Sounds", "progress.wav"));
+            SoundEffectManager.LoadSound("core", Path.Combine(Environment.CurrentDirectory, "Content", "Sounds", "startup_short.wav"));
+
             PluginHost.InstanceManager.LoadPlugin(this, "aragubas.tests.testplugin");
             PluginHost.InstanceManager.LoadPlugin(this, "aragubas.liverseCore.defaultAnimations");
 
@@ -149,12 +154,12 @@ namespace LiVerseClient
             _oldKeyboardState = Keyboard.GetState();
 
             _volumeLevel.CurrentValue = Microphone.AudioMeterInformation.MasterPeakValue * 100f;
-            _volumeLevel.Update(gameTime, IsActive || !TransparentMode);
+            _volumeLevel.Update(gameTime, IsActive && !TransparentMode);
 
             _delayValue = MathHelper.LerpPrecise(_delayValue, _delayValueTarget, 0.5f);
             _delayLevel.CurrentValue = _delayValue;
 
-            _delayLevel.Update(IsActive || !TransparentMode);
+            _delayLevel.Update(IsActive && !TransparentMode);
 
             if (_volumeLevel.TriggerActive)
             {

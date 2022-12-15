@@ -1,4 +1,5 @@
-﻿using LiVerseFramework.Graphics;
+﻿using LiVerseFramework;
+using LiVerseFramework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,6 +33,9 @@ namespace LiVerseClient
         Color _triggerColor;
         Color _triggerGrabbedColor;
         Color _triggerActiveColor;
+
+        float _triggerLevelLastValue = 0.0f;
+        bool _releaseSoundEffectToggle = false;
 
         public VolumeLevelVisualizer(RectangleF rectangle)
         {
@@ -69,10 +73,29 @@ namespace LiVerseClient
                     TriggerLevel = (mouseRelativePos / _rectangle.Height);
 
                     TriggerLevel = Math.Clamp(TriggerLevel, 0, 1);
-                    _triggerGrabbed = true;
 
-                }else { _triggerGrabbed = false; }
-            }else
+                    if (_triggerLevelLastValue != TriggerLevel)
+                    {
+                        _triggerLevelLastValue = TriggerLevel;
+                        SoundEffectManager.PlaySoundEffect("core.progress", 0.05f);
+                    }
+
+                    _triggerGrabbed = true;
+                    _releaseSoundEffectToggle = false;
+
+                }
+                else 
+                {
+                    _triggerGrabbed = false;
+
+                    if (!_releaseSoundEffectToggle)
+                    {
+                        _releaseSoundEffectToggle = true;
+                        SoundEffectManager.PlaySoundEffect("core.progress", 0.15f);
+                    }
+                }
+            }
+            else
             {
                 _triggerGrabbed = false;
             }

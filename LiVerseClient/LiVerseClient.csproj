@@ -19,6 +19,18 @@
     <None Remove="Content\Fonts\Ubuntu-Light.ttf" />
     <None Remove="Content\Images\mouth_closed.png" />
     <None Remove="Content\Images\mouth_open.png" />
+    <None Remove="Content\Sounds\click.wav" />
+    <None Remove="Content\Sounds\confirm.wav" />
+    <None Remove="Content\Sounds\decline.wav" />
+    <None Remove="Content\Sounds\error.wav" />
+    <None Remove="Content\Sounds\in.wav" />
+    <None Remove="Content\Sounds\list_end.wav" />
+    <None Remove="Content\Sounds\notify.wav" />
+    <None Remove="Content\Sounds\out.wav" />
+    <None Remove="Content\Sounds\progress.wav" />
+    <None Remove="Content\Sounds\select.wav" />
+    <None Remove="Content\Sounds\startup.wav" />
+    <None Remove="Content\Sounds\startup_short.wav" />
     <None Remove="Content\Ubuntu.ttf" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
@@ -43,6 +55,54 @@
     </Content>
 	  
     <Content Include="Content\Images\mouth_open.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\click.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\confirm.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\decline.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\error.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\in.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\startup.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\startup_short.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\list_end.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\notify.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\out.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\progress.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	  
+    <Content Include="Content\Sounds\select.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
 	  
