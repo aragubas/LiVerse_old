@@ -4,13 +4,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using LiVerseFramework.AnaBanUI.Window;
+using LiVerseFramework.AnaBanUI.Controls.Containers;
 
 namespace LiVerseClient
 {
     internal class UIRoot : IUiRoot
     {
         readonly IClientInstance _clientInstance;
-        List<Element> _elements = new();
+        public ContainerBase RootContainer { get; set; }
         List<WindowBase> _windows = new();
 
         public UIRoot(IClientInstance clientInstance)
@@ -18,15 +19,11 @@ namespace LiVerseClient
             _clientInstance = clientInstance;
         }
 
-        public void AddElement(Element element)
+        public void SetRootContainer(ContainerBase container)
         {
-            _elements.Add(element);
+            RootContainer = container;
 
-            // First element must occupy all space
-            if (_elements.Count == 1)
-            {
-                element.BoxSize = new Vector2(_clientInstance.GameInstance.Window.ClientBounds.Width, _clientInstance.GameInstance.Window.ClientBounds.Height);
-            }
+            RootContainer.BoxSize = new Vector2(_clientInstance.GameInstance.Window.ClientBounds.Width, _clientInstance.GameInstance.Window.ClientBounds.Height);
         }
 
         public void AddWindow(WindowBase window)
@@ -36,10 +33,7 @@ namespace LiVerseClient
 
         public void WindowResized()
         {
-            if (_elements.Count >= 1)
-            {
-                _elements[0].BoxSize = new Vector2(_clientInstance.GameInstance.Window.ClientBounds.Width, _clientInstance.GameInstance.Window.ClientBounds.Height);
-            }
+            RootContainer.BoxSize = new Vector2(_clientInstance.GameInstance.Window.ClientBounds.Width, _clientInstance.GameInstance.Window.ClientBounds.Height);
         }
 
         public void Update(GameTime gameTime)
@@ -49,20 +43,15 @@ namespace LiVerseClient
                 window.Update(gameTime);
             }
 
-            foreach (Element element in _elements)
-            {
-                element.Update(gameTime);
-            }
+            // Update RootElement
+            RootContainer.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
 
-            foreach (Element element in _elements)
-            {
-                element.Draw(spriteBatch);
-            }
+            RootContainer.Draw(spriteBatch);
 
             spriteBatch.End();
         }

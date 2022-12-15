@@ -43,7 +43,7 @@ namespace TestPlugin
             vBox.AddElement(label3);
             vBox.AddElement(button);
 
-            liverseClient.UIRoot.AddElement(vBox);
+            liverseClient.UIRoot.SetRootContainer(vBox);
 
 
             //Window window = new Window();

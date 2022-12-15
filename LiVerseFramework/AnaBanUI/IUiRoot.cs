@@ -1,4 +1,5 @@
-﻿using LiVerseFramework.AnaBanUI.Window;
+﻿using LiVerseFramework.AnaBanUI.Controls.Containers;
+using LiVerseFramework.AnaBanUI.Window;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -7,8 +8,19 @@ namespace LiVerseFramework.AnaBanUI
     public interface IUiRoot
     {
         #region Add Methods
-        public void AddElement(Element element);
+        public ContainerBase RootContainer { get; set; }
+
+        /// <summary>
+        /// Add a Window. Windows are floating panels that can optionally be dragged around.
+        /// </summary>
+        /// <param name="window">Any WindowBase-like class</param>
         public void AddWindow(WindowBase window);
+
+        /// <summary>
+        /// Sets RootContainer for this UiRoot
+        /// </summary>
+        /// <param name="container">Any ContainerBase-like class</param>
+        public void SetRootContainer(ContainerBase container);
         #endregion
 
         /// <summary>
