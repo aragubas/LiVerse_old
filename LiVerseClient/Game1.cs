@@ -176,8 +176,6 @@ namespace LiVerseClient
         {
             GraphicsDevice.Clear(TransparentMode ? Color.Transparent : Color.CornflowerBlue);
 
-            UIRoot.Draw(_spriteBatch);
-
             _spriteBatch.Begin();
 
             Character.Draw(_spriteBatch);
@@ -195,6 +193,9 @@ namespace LiVerseClient
 
 
             _spriteBatch.End();
+
+            UIRoot.Draw(_spriteBatch);
+
 
             UIRoot.DrawWindows(_spriteBatch);
 

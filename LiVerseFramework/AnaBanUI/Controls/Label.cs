@@ -15,6 +15,10 @@ namespace LiVerseFramework.AnaBanUI.Controls
         FontDescriptor _fontDescriptor;
         string _text;
 
+        #region Events
+        public event Action TextChanged;
+        #endregion
+
         public string Text 
         {
             get => _text;
@@ -23,6 +27,8 @@ namespace LiVerseFramework.AnaBanUI.Controls
                 if (_text != value)
                 {
                     _text = value;
+                    TextChanged?.Invoke();
+
                     Resize();
                 }
             }

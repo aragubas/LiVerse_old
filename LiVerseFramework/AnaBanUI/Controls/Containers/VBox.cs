@@ -1,12 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
 
 namespace LiVerseFramework.AnaBanUI.Controls.Containers
 {
     public class VBox : ContainerBase
     {
+        // TODO: Implement Gap
+        //float _gap = 0;
+        //public float Gap
+        //{
+        //    get => _gap;
+        //    set
+        //    {
+        //        if (_gap != value)
+        //        {
+        //            _gap = value;
+        //            CalculateUI();
+        //        }
+        //    }
+        //}
+
         public VBox()
         {
 
@@ -103,11 +116,18 @@ namespace LiVerseFramework.AnaBanUI.Controls.Containers
 
         }
 
+        protected override void Moved()
+        {
+            foreach (Element element in ChildElements)
+            {
+                element.ParentContentPosition = ContentPosition;
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
             foreach (Element element in ChildElements.Reverse<Element>())
             {
-                element.ParentContentPosition = ContentPosition;
                 element.Update(gameTime);
             }
 

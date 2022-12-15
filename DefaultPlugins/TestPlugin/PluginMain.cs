@@ -25,19 +25,23 @@ namespace TestPlugin
             Label label = new("Label1 OwO", ceira);
             Label label2 = new("Label2 UwU", ceira);
             Label label3 = new("Powered by: AnaBanUI", ceira);
+            Button button = new Button();
 
             label.ID = "label";
             label2.ID = "label2";
             label3.ID = "label3";
+            button.ID = "button";
 
-            label.Margin = new Vector2(4, 4);
-            label2.Margin = new Vector2(3, 5);
+            label.Margin = new Vector2(3, 4);
+            label2.Margin = new Vector2(3, 6);
+            button.Margin = new Vector2(0, 6);
 
-            label.Padding = new Vector2(4, 4);
+            label.Padding = new Vector2(4, 3);
 
             vBox.AddElement(label);
             vBox.AddElement(label2);
             vBox.AddElement(label3);
+            vBox.AddElement(button);
 
             liverseClient.UIRoot.AddElement(vBox);
 

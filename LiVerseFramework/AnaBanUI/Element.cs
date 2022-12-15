@@ -2,11 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiVerseFramework.AnaBanUI
 {
@@ -123,7 +118,12 @@ namespace LiVerseFramework.AnaBanUI
         {
             get => Position + ParentContentPosition;
         }
-        
+
+        public RectangleF GlobalRectangle
+        {
+            get => new RectangleF(GlobalPosition, BoxSize);
+        }
+
         public bool Visible { get; set; } = true;
 
         void ResizeBox()
@@ -132,9 +132,28 @@ namespace LiVerseFramework.AnaBanUI
             Resized();
         }
 
-        protected virtual void Resized() { }
+        public Element()
+        {
+            Resized();
+            Moved();
+        }
 
-        protected virtual void Moved() { }
+
+        #region Events
+        public event Action OnMoved;
+        public event Action OnResized;
+
+        /// <summary>
+        /// Called when Content or Box has been resized.<br></br>Don't forget to call the base method as it contains some stuff
+        /// </summary>
+        protected virtual void Resized() { OnResized?.Invoke(); }
+
+        /// <summary>
+        /// Called when Content or Box has been moved.<br></br>Don't forget to call the base method as it contains some stuff
+        /// </summary>
+        protected virtual void Moved() { OnMoved?.Invoke(); }
+
+        #endregion
 
         public virtual void Draw(SpriteBatch spriteBatch) { }
 

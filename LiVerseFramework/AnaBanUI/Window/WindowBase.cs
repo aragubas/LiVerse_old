@@ -1,8 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LiVerseFramework.AnaBanUI.Controls;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 
-namespace LiVerseFramework.AnaBanUI.Controls
+namespace LiVerseFramework.AnaBanUI.Window
 {
     public abstract class WindowBase : IElementBase
     {

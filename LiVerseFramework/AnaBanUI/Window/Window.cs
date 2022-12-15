@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiVerseFramework.AnaBanUI.Controls
+namespace LiVerseFramework.AnaBanUI.Window
 {
 
     public class Window : WindowBase
@@ -68,7 +68,7 @@ namespace LiVerseFramework.AnaBanUI.Controls
         {
             Point mousePos = Mouse.GetState().Position;
 
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed && _oldMouseState.LeftButton == ButtonState.Released && (new Rectangle(TitlebarRectangle.X + (int)Position.X, TitlebarRectangle.Y + (int)Position.Y, TitlebarRectangle.Width, TitlebarRectangle.Height).Contains(mousePos)))
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && _oldMouseState.LeftButton == ButtonState.Released && new Rectangle(TitlebarRectangle.X + (int)Position.X, TitlebarRectangle.Y + (int)Position.Y, TitlebarRectangle.Width, TitlebarRectangle.Height).Contains(mousePos))
             {
                 _dragPositionStart = Position.ToPoint() - Mouse.GetState().Position;
                 _dragging = true;
