@@ -17,6 +17,8 @@ namespace LiVerseFramework.AnaBanUI
 
             set
             {
+                if (_padding == value) { return; }
+
                 _padding = value;
                 ResizeBox();
             }
@@ -28,17 +30,26 @@ namespace LiVerseFramework.AnaBanUI
 
             set
             {
+                if (_contentSize == value + (_padding * 2)) { return; }
+
                 _contentSize = value;
 
-                if (MaximumContentSize != Vector2.Zero &&
-                    (_contentSize.X > MaximumContentSize.X || _contentSize.Y > MaximumContentSize.Y))
+                if (_contentSize.X > MaximumContentSize.X)
                 {
-                    _contentSize = MaximumContentSize;
+                    _contentSize.X = MaximumContentSize.X;
+                }
+                if (_contentSize.Y > MaximumContentSize.Y)
+                {
+                    _contentSize.Y = MaximumContentSize.Y;
                 }
 
-                if (_contentSize.X < MinimumContentSize.X || _contentSize.Y < MinimumContentSize.Y)
+                if (_contentSize.X < MinimumContentSize.X)
                 {
-                    _contentSize = MinimumContentSize;
+                    _contentSize.X = MinimumContentSize.X;
+                }
+                if (_contentSize.Y < MinimumContentSize.Y)
+                {
+                    _contentSize.Y = MinimumContentSize.Y;
                 }
 
                 ResizeBox();
@@ -51,17 +62,26 @@ namespace LiVerseFramework.AnaBanUI
 
             set
             {
+                if (_contentSize == value) { return; }
+
                 _contentSize = value;
 
-                if (MaximumContentSize != Vector2.Zero &&
-                    (_contentSize.X > MaximumContentSize.X || _contentSize.Y > MaximumContentSize.Y))
+                if (_contentSize.X > MaximumContentSize.X)
                 {
-                    _contentSize = MaximumContentSize;
+                    _contentSize.X = MaximumContentSize.X;
+                }
+                if (_contentSize.Y > MaximumContentSize.Y)
+                {
+                    _contentSize.Y = MaximumContentSize.Y;
                 }
 
-                if (_contentSize.X < MinimumContentSize.X || _contentSize.Y < MinimumContentSize.Y)
+                if (_contentSize.X < MinimumContentSize.X)
                 {
-                    _contentSize = MinimumContentSize;
+                    _contentSize.X = MinimumContentSize.X;
+                }
+                if (_contentSize.Y < MinimumContentSize.Y)
+                {
+                    _contentSize.Y = MinimumContentSize.Y;
                 }
 
                 ResizeBox();
@@ -79,6 +99,7 @@ namespace LiVerseFramework.AnaBanUI
             get => _margin;
             set
             {
+                if (_margin == value) { return; }
                 _margin = value;
                 Moved();
             }
@@ -90,6 +111,7 @@ namespace LiVerseFramework.AnaBanUI
             get => _position;
             set
             {
+                if (_position == value) { return; }
                 _position = value;
                 Moved();
             }

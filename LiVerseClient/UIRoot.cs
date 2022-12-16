@@ -34,6 +34,7 @@ namespace LiVerseClient
         public void WindowResized()
         {
             RootContainer.BoxSize = new Vector2(_clientInstance.GameInstance.Window.ClientBounds.Width, _clientInstance.GameInstance.Window.ClientBounds.Height);
+            RootContainer.MaximumContentSize = new Vector2(_clientInstance.GameInstance.Window.ClientBounds.Width, _clientInstance.GameInstance.Window.ClientBounds.Height);
         }
 
         public void Update(GameTime gameTime)

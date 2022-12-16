@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 
 namespace LiVerseFramework.AnaBanUI.Controls.Containers
 {
@@ -29,14 +30,21 @@ namespace LiVerseFramework.AnaBanUI.Controls.Containers
         {
             spriteBatch.End();
 
-            spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(ContentPosition, 0f)));
 
             foreach (Element element in ChildElements)
             {
+                spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(ContentPosition, 0f)));
                 element.Draw(spriteBatch);
+                spriteBatch.End();
             }
 
+            spriteBatch.Begin();
+
+            spriteBatch.DrawRectangle(ContentRectangle, Color.Blue, 1);
+            spriteBatch.DrawRectangle(BoxRectangle, Color.Magenta, 1);
+
             spriteBatch.End();
+
 
             spriteBatch.Begin();
         }
@@ -65,8 +73,9 @@ namespace LiVerseFramework.AnaBanUI.Controls.Containers
                 return;
             }
 
-            // TODO: Needs iteration count
             float nextY = 0;
+            float totalX = 0;
+            float totalY = 0;
 
             for (int i = 0; i < ChildElements.Count; i++)
             {
@@ -96,24 +105,17 @@ namespace LiVerseFramework.AnaBanUI.Controls.Containers
                     nextY = element.Margin.Y;
                 }
 
-                element.Position = new Vector2(element.Margin.X, nextY);
+                float elementX = element.Margin.X;
+
+                totalX += element.BoxSize.X;
+                totalY += element.BoxSize.Y;
+
+                element.Position = new Vector2(elementX, nextY);
                 nextY += element.BoxRectangle.Height + nextMargin;
             }
 
-            //foreach (Element element in ChildElements)
-            //{
-            //    if (nextY == 0) 
-            //    {
-            //        nextY += element.BoxRectangle.Height + element.Margin.Y;
-
-            //        continue;
-            //    }
-            //    element.Position = new Vector2(0, nextY);
-
-            //    nextY += element.BoxRectangle.Height + element.Margin.Y;
-            //}
-
-
+            ContentSize = new Vector2(totalX, totalY);
+            Console.WriteLine(new Vector2(totalX, totalY));
         }
 
         protected override void Moved()
@@ -132,5 +134,6 @@ namespace LiVerseFramework.AnaBanUI.Controls.Containers
             }
 
         }
+
     }
 }

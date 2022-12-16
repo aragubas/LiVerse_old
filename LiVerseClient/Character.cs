@@ -40,6 +40,18 @@ namespace LiVerseClient
 
             // When the Client loads no animations are available, so when plugins start loading, look for the 'default_idle' animation
             _clientReferece.Animations.CollectionChanged += Animations_CollectionChanged;
+
+            GlobalEventManager.AddEventListener("core.speakOn", new EventListener("When speaking", () =>
+            {
+                Speaking = true;
+            }));
+
+            GlobalEventManager.AddEventListener("core.speakOff", new EventListener("When not speaking", () =>
+            {
+                Speaking = false;
+            }));
+
+
         }
 
         void Animations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

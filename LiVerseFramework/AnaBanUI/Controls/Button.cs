@@ -44,13 +44,18 @@ namespace LiVerseFramework.AnaBanUI.Controls
 
         ButtonState _state = ButtonState.Normal;
         bool _mouseDownLock = false;
-        bool _soundEffectToggle = false;
+        bool _buttonActiveToggle = false;
 
         MouseState _oldMouseState;
 
-        public Button()
+        #region Events
+        public event Action Clicked;
+
+        #endregion
+
+        public Button(string text="Button")
         {
-            label = new Label("Button", new Graphics.FontDescriptor("Ubuntu.ttf", 14));
+            label = new Label(text, new Graphics.FontDescriptor("Ubuntu.ttf", 14));
 
             Padding = new Vector2(4);
             ContentSize = label.ContentSize;
@@ -78,14 +83,15 @@ namespace LiVerseFramework.AnaBanUI.Controls
                 {
                     _state = ButtonState.Active;
 
-                    if (_soundEffectToggle)
+                    if (_buttonActiveToggle)
                     {
-                        _soundEffectToggle = false;
-                        SoundEffectManager.PlaySoundEffect("core.click", 1.0f);
+                        _buttonActiveToggle = false;
+                        SoundEffectManager.PlaySoundEffect("core.click", 0.35f);
+                        Clicked?.Invoke();
                     }
 
                 }
-                else { _state = ButtonState.Hover; _soundEffectToggle = true; }
+                else { _state = ButtonState.Hover; _buttonActiveToggle = true; }
 
             }
             else

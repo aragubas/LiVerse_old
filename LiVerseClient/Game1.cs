@@ -44,6 +44,8 @@ namespace LiVerseClient
         KeyboardState _oldKeyboardState;
         FontDescriptor _copyrightTextFont;
 
+        bool _lastDelayTrigger = false;
+
         // For debugging purposes
         GameTime _lastGameTime;
 
@@ -114,6 +116,11 @@ namespace LiVerseClient
             PluginHost.InstanceManager.LoadPlugin(this, "aragubas.tests.testplugin");
             PluginHost.InstanceManager.LoadPlugin(this, "aragubas.liverseCore.defaultAnimations");
 
+            GlobalEventManager.AddEventListener("core.test", new EventListener("Writes Spaghetti in the console", () =>
+            {
+                Console.WriteLine("Spaghetti!");
+            }));
+
             base.Initialize();
         }
 
@@ -168,7 +175,16 @@ namespace LiVerseClient
             }
 
             Character.Update(gameTime);
-            Character.Speaking = _delayLevel.TriggerActive;
+            //Character.Speaking = _delayLevel.TriggerActive;
+
+            if (_lastDelayTrigger != _delayLevel.TriggerActive)
+            {
+                _lastDelayTrigger = _delayLevel.TriggerActive;
+
+                if (_delayLevel.TriggerActive == true) 
+                { GlobalEventManager.InvokeEvent("core.speakOn"); } 
+                else { GlobalEventManager.InvokeEvent("core.speakOff"); }
+            }
 
             _lastGameTime = gameTime;
 

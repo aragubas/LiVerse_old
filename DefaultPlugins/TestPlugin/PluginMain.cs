@@ -17,9 +17,9 @@ namespace TestPlugin
         {
             liverseClient = clientInstance;
 
-            VBox vBox = new VBox();
-            vBox.Padding = new Vector2(14, 14);
-            vBox.ID = "MainVBox";
+            HBox hBox = new HBox();
+            hBox.Padding = new Vector2(14, 14);
+            hBox.ID = "MainVBox";
 
             var ceira = new FontDescriptor("Ubuntu.ttf", 14);
             Label label = new("Label1 OwO", ceira);
@@ -27,31 +27,35 @@ namespace TestPlugin
             Label label3 = new("Powered by: AnaBanUI", ceira);
             Button button = new Button();
 
-            label.ID = "label";
-            label2.ID = "label2";
-            label3.ID = "label3";
-            button.ID = "button";
+            VBox vBox = new VBox();
 
-            label.Margin = new Vector2(3, 4);
-            label2.Margin = new Vector2(3, 6);
-            button.Margin = new Vector2(0, 6);
+            Button button2 = new Button("Sinas");
+            Label label1 = new Label("Ceira", new FontDescriptor("Ubuntu.ttf", 14));
 
-            label.Padding = new Vector2(4, 3);
+            vBox.AddElement(button2);
+            vBox.AddElement(label1);
 
-            vBox.AddElement(label);
-            vBox.AddElement(label2);
-            vBox.AddElement(label3);
-            vBox.AddElement(button);
+            hBox.AddElement(vBox);
 
-            liverseClient.UIRoot.SetRootContainer(vBox);
+            hBox.AddElement(label);
+            hBox.AddElement(label2);
+            hBox.AddElement(label3);
+            hBox.AddElement(button);
 
+            liverseClient.UIRoot.SetRootContainer(hBox);
+
+            button.Clicked += () =>
+            {
+                GlobalEventManager.InvokeEvent("core.test");
+
+            };
 
             //Window window = new Window();
             //window.Rectangle = new Rectangle(20, 20, 250, 150);
 
             //liverseClient.UIRoot.AddWindow(window);
 
-            SoundEffectManager.PlaySoundEffect("core.startup_short", 1.0f);
+            SoundEffectManager.PlaySoundEffect("core.startup_short", 0.4f);
         }
 
         public void Unload()
